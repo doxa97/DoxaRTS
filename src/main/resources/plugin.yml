@@ -1,0 +1,4 @@
+name: DoxaRTS
+version: '${project.version}'
+main: fir.sec.thi.doxarts.DoxaRTS
+api-version: 1.19
