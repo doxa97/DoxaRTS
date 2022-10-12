@@ -120,6 +120,9 @@ public class Command implements TabExecutor {
                     }
                 }
             }
+            if (command.getName().equals("스탯")){
+                GUI.Status(player);
+            }
         }
         return false;
     }
@@ -134,7 +137,7 @@ public class Command implements TabExecutor {
                 }
             }
             if (args.length == 0){
-                return Arrays.asList("참가");
+                return Arrays.asList("참가","스탯");
             }
             else {
                 if (args.length == 1){

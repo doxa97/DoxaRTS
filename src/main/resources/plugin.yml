@@ -5,3 +5,9 @@ api-version: 1.19
 commands:
   게임시작:
     description: game start
+  참가:
+   description: team join
+  초기화:
+    description: reset
+  스탯:
+    description: stat

@@ -81,7 +81,7 @@ public class Stats implements Listener {
         }
     }
 
-    public void StatUp(long[] stat, Player player, int num) {
+    public static void StatUp(long[] stat, Player player, int num) {
         if (stat[1] > 0) {
             stat[num] = stat[num] + 1;
             stat[1] = stat[1] - 1;

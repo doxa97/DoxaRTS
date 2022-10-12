@@ -3,6 +3,7 @@ package fir.sec.thi.doxarts;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -25,15 +26,30 @@ public class GUI implements Listener {
         return stack;
     }
 
-    public void Status(){
+    public static void Status(Player player){
         Inventory status = Bukkit.createInventory(null, 9,"[ S T A T U S ]");
-        ArrayList<String> arrayList = new ArrayList<>();
 
         status.setItem(0, GuiTool(Material.COOKED_BEEF, ChatColor.RED+ "[ 활력 ]", Arrays.asList(ChatColor.GRAY+"dsa","asd"), 10000));
         status.setItem(2, GuiTool(Material.IRON_SWORD, ChatColor.DARK_RED + "[ 근력 ]", Arrays.asList(ChatColor.GRAY+"dsa","asd"), 10000));
         status.setItem(4, GuiTool(Material.LEATHER_BOOTS,  ChatColor.AQUA+ "[ 민첩 ]", Arrays.asList(ChatColor.GRAY+"dsa","asd"), 10000));
         status.setItem(6, GuiTool(Material.KNOWLEDGE_BOOK, ChatColor.DARK_PURPLE + "[ 지력 ]", Arrays.asList(ChatColor.GRAY+"dsa","asd"), 10000));
         status.setItem(8, GuiTool(Material.BOW,  ChatColor.GOLD+ "[ 손재주 ]", Arrays.asList(ChatColor.GRAY+"dsa","asd"), 10000));
+
+        player.openInventory(status);
+
+    }
+
+    public static void Smith(Player player){
+        Inventory smith = Bukkit.createInventory(null, 9,"[ S T A T U S ]");
+
+        player.openInventory(smith);
+
+    }
+
+    public static void Shop(Player player){
+        Inventory shop = Bukkit.createInventory(null, 9,"[ S T A T U S ]");
+
+        player.openInventory(shop);
 
     }
 

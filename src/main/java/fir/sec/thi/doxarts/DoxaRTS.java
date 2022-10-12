@@ -10,7 +10,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Objects;
 
 import static fir.sec.thi.doxarts.Variable.accessory;

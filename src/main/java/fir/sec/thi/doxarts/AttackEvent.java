@@ -48,11 +48,10 @@ public class AttackEvent implements Listener {
 
     @EventHandler
     public void Interact(PlayerInteractEvent e){
-
         Player p = e.getPlayer();
         Action a = e.getAction();
         ItemMeta i = p.getInventory().getItemInMainHand().getItemMeta();
-        if (!p.getInventory().getItemInMainHand().getType().equals(Material.BOW)) {
+        if (p.getInventory().getItemInMainHand().getType().equals(Material.STICK)) {
             if (a == Action.LEFT_CLICK_AIR) {
                 if (!p.isSneaking()) {
                     if (p.getAttackCooldown() < 1.0F) {
@@ -72,16 +71,20 @@ public class AttackEvent implements Listener {
                         if (Objects.requireNonNull(Objects.requireNonNull(i).getLore()).contains("[ 무기 ]")) {
                             e.setCancelled(true);
                             String s = String.valueOf(i.getLore().contains("첫번째 슬롯"));
-                            String skill = s.replace("첫번째 슬롯 : ", "").replace("[ ","").replace(" ]","");
-                            p.performCommand("cast " + skill);
+                            if (!s.contains("비어있음")){
+                                String skill = s.replace("첫번째 슬롯 : ", "").replace("[ ","").replace(" ]","");
+                                p.performCommand("cast " + skill);
+                            }
                         }
                     }
                 } else if (p.isSneaking()) {
                     if (Objects.requireNonNull(Objects.requireNonNull(i).getLore()).contains("[ 무기 ]")) {
                         e.setCancelled(true);
                         String s = String.valueOf(i.getLore().contains("세번째 슬롯"));
-                        String skill = s.replace("세번째 슬롯 : ", "").replace("[ ","").replace(" ]","");
-                        p.performCommand("cast " + skill);
+                        if (!s.contains("비어있음")){
+                            String skill = s.replace("세번째 슬롯 : ", "").replace("[ ","").replace(" ]","");
+                            p.performCommand("cast " + skill);
+                        }
                     }
                 }
             } else if (a == Action.RIGHT_CLICK_AIR) {
@@ -89,15 +92,20 @@ public class AttackEvent implements Listener {
                     if (Objects.requireNonNull(Objects.requireNonNull(i).getLore()).contains("[ 무기 ]")){
                         e.setCancelled(true);
                         String s = String.valueOf(i.getLore().contains("두번째 슬롯"));
-                        String skill = s.replace("두번째 슬롯 : ","").replace("[ ","").replace(" ]","");
-                        p.performCommand("cast " + skill);
+                        if (!s.contains("비어있음")){
+                            String skill = s.replace("두번째 슬롯 : ","").replace("[ ","").replace(" ]","");
+                            p.performCommand("cast " + skill);
+                        }
+
                     }
                 } else if (p.isSneaking()){
                     if (Objects.requireNonNull(Objects.requireNonNull(i).getLore()).contains("[ 무기 ]")){
                         e.setCancelled(true);
                         String s = String.valueOf(i.getLore().contains("네번째 슬롯"));
-                        String skill = s.replace("네번째 슬롯 : ","").replace("[ ","").replace(" ]","");
-                        p.performCommand("cast " + skill);
+                        if (!s.contains("비어있음")){
+                            String skill = s.replace("네번째 슬롯 : ","").replace("[ ","").replace(" ]","");
+                            p.performCommand("cast " + skill);
+                        }
                     }
                 }
             }
@@ -109,7 +117,6 @@ public class AttackEvent implements Listener {
     public void EntityHit(EntityDamageByEntityEvent e){
         LivingEntity entity = (LivingEntity) e.getEntity();
         entity.setNoDamageTicks(0);
-        entity.setMaximumNoDamageTicks(0);
         if (e.getDamager() instanceof Player){
             Player player = (Player) e.getDamager();
             double Damage = e.getDamage();
