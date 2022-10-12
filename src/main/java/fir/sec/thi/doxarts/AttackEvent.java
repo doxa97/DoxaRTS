@@ -1,6 +1,7 @@
 package fir.sec.thi.doxarts;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -11,7 +12,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -60,13 +60,13 @@ public class AttackEvent implements Listener {
                         int r = Random(1, 4);
                         switch (r) {
                             case 1:
-                                p.sendMessage("공격이 너무 성급합니다!");
+                                p.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "공격이 너무 성급합니다!");
                             case 2:
-                                p.sendMessage("공격이 준비되지 않았습니다!");
+                                p.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "공격이 준비되지 않았습니다!");
                             case 3:
-                                p.sendMessage("팔이 헛돌았습니다!");
+                                p.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "팔이 헛돌았습니다!");
                             case 4:
-                                p.sendMessage("집중이 흐트러졌습니다!");
+                                p.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "집중이 흐트러졌습니다!");
                         }
                     } else {
                         if (Objects.requireNonNull(Objects.requireNonNull(i).getLore()).contains("[ 무기 ]")) {

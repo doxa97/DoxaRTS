@@ -1,8 +1,8 @@
 package fir.sec.thi.doxarts;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class Stats implements Listener {
                 filename.createNewFile();
             }
             BufferedWriter w = new BufferedWriter(new FileWriter(filename));
-            w.append("레벨:1"+"\r\n"+"여유스탯:0"+"\r\n"+"최대경험치:1"+"\r\n"+"현재경험치:0"+"\r\n"+"활력:0"+"\r\n"+"근력:0"+"\r\n"+"민첩:0"
+            w.append("레벨:1"+"\r\n"+"여유스탯:0"+"\r\n"+"최대경험치:7"+"\r\n"+"현재경험치:0"+"\r\n"+"활력:0"+"\r\n"+"근력:0"+"\r\n"+"민첩:0"
                     +"\r\n"+"지력:0"+"\r\n"+"손재주:0"+"총 활력:0"+"\r\n"+"총 근력:0"+"\r\n"+"총 민첩:0"
                     +"\r\n"+"총 지력:0"+"\r\n"+"총 손재주:0");
             w.flush();
@@ -87,7 +87,7 @@ public class Stats implements Listener {
             stat[1] = stat[1] - 1;
             setStat(player.getUniqueId().toString(), stat);
         } else {
-            player.sendMessage("잔여 스탯이 부족합니다.");
+            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "잔여 스탯이 부족합니다.");
         }
     }
 
@@ -100,7 +100,7 @@ public class Stats implements Listener {
                 stat[0] = stat[0] + 1;
                 stat[2] = (stat[0] * 2) + stat[3];
                 stat[1] = stat[1] + 3;
-                player.sendMessage("Level Up!");
+                player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "Level Up!");
                 setStat(player.getUniqueId().toString(), stat);
             }
         }

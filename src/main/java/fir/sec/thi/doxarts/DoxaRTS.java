@@ -1,20 +1,22 @@
 package fir.sec.thi.doxarts;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 
+import static fir.sec.thi.doxarts.Variable.accessory;
+
 
 public final class DoxaRTS extends JavaPlugin implements Listener {
-
-    public static HashMap<String,Integer> weapon = new HashMap<>();
-    public static HashMap<String,Integer> accessory = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -24,6 +26,16 @@ public final class DoxaRTS extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new AttackEvent(),this);
         getServer().getPluginManager().registerEvents(new Level(),this);
         getServer().getPluginManager().registerEvents(new JoinEvent(), this);
+        getServer().getPluginManager().registerEvents(new GUI(), this);
+        getServer().getPluginManager().registerEvents(new Inventory(), this);
+        getServer().getPluginManager().registerEvents(new Variable(), this);
+        getServer().getPluginManager().registerEvents(new Teams(), this);
+
+        getCommand("게임시작").setExecutor(new Command());
+        getCommand("초기화").setExecutor(new Command());
+        getCommand("참가").setExecutor(new Command());
+
+
         getLogger().info("RTS ON!");
         getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Runnable() {
             @Override
@@ -34,56 +46,176 @@ public final class DoxaRTS extends JavaPlugin implements Listener {
                     player.setExp(Float.parseFloat(String.format("%.2f", perexp)));
                     player.setLevel((int) stat[0]);
 
-                    for (int i = 0; i <= player.getInventory().getSize(); i++){
-                        if (!(player.getInventory().getItem(i) == null) || !(Objects.requireNonNull(player.getInventory().getItem(i)).getType() == Material.AIR)) {
-                            if (Objects.requireNonNull(Objects.requireNonNull(player.getInventory().getItem(i)).getItemMeta()).hasLore()) {
-                                ItemMeta m = Objects.requireNonNull(player.getInventory().getItem(i)).getItemMeta();
-                                if (Objects.requireNonNull(Objects.requireNonNull(m).getLore()).contains("[ 장신구 ]")){
-                                    if (m.getLore().contains("활력 : ")){
-                                        String con = String.valueOf(m.getLore().contains("활력 증가 : "));
-                                        accessory.put(i+"con", Integer.valueOf(con.replace("활력 증가 : ","")));
-                                    }
-                                    if (m.getLore().contains("근력 : ")){
-                                        String con = String.valueOf(m.getLore().contains("근력 증가 : "));
-                                        accessory.put(i+"str", Integer.valueOf(con.replace("근력 증가 : ","")));
-                                    }
-                                    if (m.getLore().contains("민첩 : ")){
-                                        String con = String.valueOf(m.getLore().contains("민첩 증가 : "));
-                                        accessory.put(i+"agi", Integer.valueOf(con.replace("민첩 증가 : ","")));
-                                    }
-                                    if (m.getLore().contains("지력 : ")){
-                                        String con = String.valueOf(m.getLore().contains("지력 증가 : "));
-                                        accessory.put(i+"int", Integer.valueOf(con.replace("지력 증가 : ","")));
-                                    }
-                                    if (m.getLore().contains("손재주 : ")){
-                                        String con = String.valueOf(m.getLore().contains("손재주 증가 : "));
-                                        accessory.put(i+"dex", Integer.valueOf(con.replace("손재주 증가 : ","")));
-                                    }
-                                } else if (Objects.requireNonNull(Objects.requireNonNull(player.getInventory().getItemInMainHand().getItemMeta()).getLore()).contains("[ 무기 ]")){
-                                    ItemMeta mm = player.getInventory().getItemInMainHand().getItemMeta();
-                                    if (mm.getLore().contains("근접 공격력 : ")){
-                                        String melee = String.valueOf(mm.getLore().contains("근접 공격력 : "));
-                                        weapon.put("melee", Integer.valueOf(melee.replace("근접 공격력 : ","")));
-                                    }
-                                    if (mm.getLore().contains("마법 공격력 : ")){
-                                        String magic = String.valueOf(mm.getLore().contains("마법 공격력 : "));
-                                        weapon.put("magic", Integer.valueOf(magic.replace("마법 공격력 : ","")));
-                                    }
-                                    if (mm.getLore().contains("원거리 공격력 : ")){
-                                        String range = String.valueOf(mm.getLore().contains("원거리 공격력 : "));
-                                        weapon.put("range", Integer.valueOf(range.replace("원거리 공격력 : ","")));
-                                    }
-                                    if (mm.getLore().contains("치명타 확률 : ")){
-                                        String critical = String.valueOf(mm.getLore().contains("치명타 확률 : "));
-                                        weapon.put("critical", Integer.valueOf(critical.replace("치명타 확률 : ","")));
-                                    }
-                                    if (mm.getLore().contains("이동 속도 : ")){
-                                        String movement = String.valueOf(mm.getLore().contains("이동 속도 : "));
-                                        weapon.put("movement", Integer.valueOf(movement.replace("이동 속도 : ","")));
-                                    }
-                                }
+                    if (player.getInventory().getItem(9).getType() == null || player.getInventory().getItem(9).getType() == Material.AIR){
+                        player.getInventory().setItem(9, GUI.GuiTool(Material.GRAY_STAINED_GLASS_PANE, ChatColor.DARK_GRAY + "[ 비어 있음 ]",
+                                Arrays.asList(ChatColor.DARK_BLUE + "[ 장신구 ]",ChatColor.GRAY + "해당 장비란에 장신구를 넣어주세요."), 10000));
+                    }
+                    if (player.getInventory().getItem(10).getType() == null || player.getInventory().getItem(10).getType() == Material.AIR){
+                        player.getInventory().setItem(10, GUI.GuiTool(Material.GRAY_STAINED_GLASS_PANE, ChatColor.DARK_GRAY + "[ 비어 있음 ]",
+                                Arrays.asList(ChatColor.DARK_BLUE + "[ 장신구 ]",ChatColor.GRAY + "해당 장비란에 장신구를 넣어주세요."), 10000));
+                    }
+                    if (player.getInventory().getItem(11).getType() == null || player.getInventory().getItem(11).getType() == Material.AIR){
+                        player.getInventory().setItem(11, GUI.GuiTool(Material.GRAY_STAINED_GLASS_PANE, ChatColor.DARK_GRAY + "[ 비어 있음 ]",
+                                Arrays.asList(ChatColor.DARK_BLUE + "[ 장신구 ]",ChatColor.GRAY + "해당 장비란에 장신구를 넣어주세요."), 10000));
+                    }if (player.getInventory().getItem(12).getType() == null || player.getInventory().getItem(12).getType() == Material.AIR){
+                        player.getInventory().setItem(12, GUI.GuiTool(Material.GRAY_STAINED_GLASS_PANE, ChatColor.DARK_GRAY + "[ 비어 있음 ]",
+                                Arrays.asList(ChatColor.DARK_BLUE + "[ 장신구 ]",ChatColor.GRAY + "해당 장비란에 장신구를 넣어주세요."), 10000));
+                    }
+
+                    ItemStack FirstAccessory = player.getInventory().getItem(9);
+                    ItemStack SecondAccessory = player.getInventory().getItem(10);
+                    ItemStack ThirdAccessory = player.getInventory().getItem(11);
+                    ItemStack FourthAccessory = player.getInventory().getItem(12);
+
+                    if (FirstAccessory.getType() == Material.GRAY_STAINED_GLASS_PANE){
+                        accessory.put("1con", 0);
+                        accessory.put("1str", 0);
+                        accessory.put("1agi", 0);
+                        accessory.put("1int", 0);
+                        accessory.put("1dex", 0);
+                    }
+                    else if (FirstAccessory.getType() != Material.GRAY_STAINED_GLASS_PANE) {
+                        ItemMeta meta = FirstAccessory.getItemMeta();
+                        for (int i = 0; i <= meta.getLore().size(); i++) {
+                            if (meta.getLore().get(i).contains("활력")) {
+                                accessory.put("1con", Integer.valueOf(meta.getLore().get(i).
+                                        replace("활력", "").replace(" ", "").replace("상승량", "").
+                                        replace(":", "")));
+                            }
+                            if (meta.getLore().get(i).contains("근력")) {
+                                accessory.put("1str", Integer.valueOf(meta.getLore().get(i).
+                                        replace("근력", "").replace(" ", "").replace("상승량", "").
+                                        replace(":", "")));
+                            }
+                            if (meta.getLore().get(i).contains("민첩")) {
+                                accessory.put("1agi", Integer.valueOf(meta.getLore().get(i).
+                                        replace("민첩", "").replace(" ", "").replace("상승량", "").
+                                        replace(":", "")));
+                            }
+                            if (meta.getLore().get(i).contains("지력")) {
+                                accessory.put("1int", Integer.valueOf(meta.getLore().get(i).
+                                        replace("지력", "").replace(" ", "").replace("상승량", "").
+                                        replace(":", "")));
+                            }
+                            if (meta.getLore().get(i).contains("손재주")) {
+                                accessory.put("1dex", Integer.valueOf(meta.getLore().get(i).
+                                        replace("손재주", "").replace(" ", "").replace("상승량", "").
+                                        replace(":", "")));
                             }
                         }
+                    }
+                    if (SecondAccessory.getType() == Material.GRAY_STAINED_GLASS_PANE){
+                        accessory.put("2con", 0);
+                        accessory.put("2str", 0);
+                        accessory.put("2agi", 0);
+                        accessory.put("2int", 0);
+                        accessory.put("2dex", 0);
+                    }
+                    else if (SecondAccessory.getType() != Material.GRAY_STAINED_GLASS_PANE) {
+                        ItemMeta meta = SecondAccessory.getItemMeta();
+                        for (int i = 0; i <= meta.getLore().size(); i++) {
+                            if (meta.getLore().get(i).contains("활력")) {
+                                accessory.put("2con", Integer.valueOf(meta.getLore().get(i).
+                                        replace("활력", "").replace(" ", "").replace("상승량", "").
+                                        replace(":", "")));
+                            }
+                            if (meta.getLore().get(i).contains("근력")) {
+                                accessory.put("2str", Integer.valueOf(meta.getLore().get(i).
+                                        replace("근력", "").replace(" ", "").replace("상승량", "").
+                                        replace(":", "")));
+                            }
+                            if (meta.getLore().get(i).contains("민첩")) {
+                                accessory.put("2agi", Integer.valueOf(meta.getLore().get(i).
+                                        replace("민첩", "").replace(" ", "").replace("상승량", "").
+                                        replace(":", "")));
+                            }
+                            if (meta.getLore().get(i).contains("지력")) {
+                                accessory.put("2int", Integer.valueOf(meta.getLore().get(i).
+                                        replace("지력", "").replace(" ", "").replace("상승량", "").
+                                        replace(":", "")));
+                            }
+                            if (meta.getLore().get(i).contains("손재주")) {
+                                accessory.put("2dex", Integer.valueOf(meta.getLore().get(i).
+                                        replace("손재주", "").replace(" ", "").replace("상승량", "").
+                                        replace(":", "")));
+                            }
+                        }
+                    }
+                    if (ThirdAccessory.getType() == Material.GRAY_STAINED_GLASS_PANE){
+                        accessory.put("3con", 0);
+                        accessory.put("3str", 0);
+                        accessory.put("3agi", 0);
+                        accessory.put("3int", 0);
+                        accessory.put("3dex", 0);
+                    }
+                    else if (ThirdAccessory.getType() != Material.GRAY_STAINED_GLASS_PANE) {
+                        ItemMeta meta = ThirdAccessory.getItemMeta();
+                        for (int i = 0; i <= meta.getLore().size(); i++) {
+                            if (meta.getLore().get(i).contains("활력")) {
+                                accessory.put("3con", Integer.valueOf(meta.getLore().get(i).
+                                        replace("활력", "").replace(" ", "").replace("상승량", "").
+                                        replace(":", "")));
+                            }
+                            if (meta.getLore().get(i).contains("근력")) {
+                                accessory.put("3str", Integer.valueOf(meta.getLore().get(i).
+                                        replace("근력", "").replace(" ", "").replace("상승량", "").
+                                        replace(":", "")));
+                            }
+                            if (meta.getLore().get(i).contains("민첩")) {
+                                accessory.put("3agi", Integer.valueOf(meta.getLore().get(i).
+                                        replace("민첩", "").replace(" ", "").replace("상승량", "").
+                                        replace(":", "")));
+                            }
+                            if (meta.getLore().get(i).contains("지력")) {
+                                accessory.put("3int", Integer.valueOf(meta.getLore().get(i).
+                                        replace("지력", "").replace(" ", "").replace("상승량", "").
+                                        replace(":", "")));
+                            }
+                            if (meta.getLore().get(i).contains("손재주")) {
+                                accessory.put("3dex", Integer.valueOf(meta.getLore().get(i).
+                                        replace("손재주", "").replace(" ", "").replace("상승량", "").
+                                        replace(":", "")));
+                            }
+                        }
+                    }
+                    if (FourthAccessory.getType() == Material.GRAY_STAINED_GLASS_PANE){
+                        accessory.put("4con", 0);
+                        accessory.put("4str", 0);
+                        accessory.put("4agi", 0);
+                        accessory.put("4int", 0);
+                        accessory.put("4dex", 0);
+                    }
+                    else if (FourthAccessory.getType() != Material.GRAY_STAINED_GLASS_PANE) {
+                        ItemMeta meta = FourthAccessory.getItemMeta();
+                        for (int i = 0; i <= meta.getLore().size(); i++) {
+                            if (meta.getLore().get(i).contains("활력")) {
+                                accessory.put("4con", Integer.valueOf(meta.getLore().get(i).
+                                        replace("활력", "").replace(" ", "").replace("상승량", "").
+                                        replace(":", "")));
+                            }
+                            if (meta.getLore().get(i).contains("근력")) {
+                                accessory.put("4str", Integer.valueOf(meta.getLore().get(i).
+                                        replace("근력", "").replace(" ", "").replace("상승량", "").
+                                        replace(":", "")));
+                            }
+                            if (meta.getLore().get(i).contains("민첩")) {
+                                accessory.put("4agi", Integer.valueOf(meta.getLore().get(i).
+                                        replace("민첩", "").replace(" ", "").replace("상승량", "").
+                                        replace(":", "")));
+                            }
+                            if (meta.getLore().get(i).contains("지력")) {
+                                accessory.put("4int", Integer.valueOf(meta.getLore().get(i).
+                                        replace("지력", "").replace(" ", "").replace("상승량", "").
+                                        replace(":", "")));
+                            }
+                            if (meta.getLore().get(i).contains("손재주")) {
+                                accessory.put("4dex", Integer.valueOf(meta.getLore().get(i).
+                                        replace("손재주", "").replace(" ", "").replace("상승량", "").
+                                        replace(":", "")));
+                            }
+                        }
+                    }
+                    for (int i = 1; i <= 4 ; i++){
                         stat[9] = stat[4] + accessory.get(i+"con");
                         stat[10] = stat[5] + accessory.get(i+"str");
                         stat[11] = stat[6] + accessory.get(i+"agi");

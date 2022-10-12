@@ -2,3 +2,6 @@ name: DoxaRTS
 version: '${project.version}'
 main: fir.sec.thi.doxarts.DoxaRTS
 api-version: 1.19
+commands:
+  게임시작:
+    description: game start
