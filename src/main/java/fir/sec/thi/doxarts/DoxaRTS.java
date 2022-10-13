@@ -27,7 +27,7 @@ public final class DoxaRTS extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new Level(),this);
         getServer().getPluginManager().registerEvents(new JoinEvent(), this);
         getServer().getPluginManager().registerEvents(new GUI(), this);
-        getServer().getPluginManager().registerEvents(new Inventory(), this);
+        getServer().getPluginManager().registerEvents(new Interact(), this);
         getServer().getPluginManager().registerEvents(new Variable(), this);
         getServer().getPluginManager().registerEvents(new Teams(), this);
 
