@@ -21,7 +21,7 @@ public class Stats implements Listener {
             }
             BufferedWriter w = new BufferedWriter(new FileWriter(filename));
             w.append("레벨:1"+"\r\n"+"여유스탯:0"+"\r\n"+"최대경험치:7"+"\r\n"+"현재경험치:0"+"\r\n"+"활력:0"+"\r\n"+"근력:0"+"\r\n"+"민첩:0"
-                    +"\r\n"+"지력:0"+"\r\n"+"손재주:0"+"총 활력:0"+"\r\n"+"총 근력:0"+"\r\n"+"총 민첩:0"
+                    +"\r\n"+"지력:0"+"\r\n"+"손재주:0"+"\r\n"+"총 활력:0"+"\r\n"+"총 근력:0"+"\r\n"+"총 민첩:0"
                     +"\r\n"+"총 지력:0"+"\r\n"+"총 손재주:0");
             w.flush();
             w.close();
@@ -72,8 +72,8 @@ public class Stats implements Listener {
                 filename.createNewFile();
             }
             BufferedWriter W = new BufferedWriter(new FileWriter(filename));
-            W.append("레벨:"+stat[0]+"여유스탯:"+stat[1]+"\r\n"+"최대경험치:"+stat[2]+"\r\n"+"현재경험치:"+stat[3]+"\r\n"+"활력:"+stat[4]+"\r\n"+"근력:"+stat[5]+"\r\n"+"민첩:"+stat[6]
-                    +"\r\n"+"지력:"+stat[7]+"\r\n"+"손재주:"+stat[8]+"총 활력:"+stat[9]+"\r\n"+"총 근력:"+stat[10]+"\r\n"+"총 민첩:"+stat[11]
+            W.append("레벨:"+stat[0]+"\r\n"+"여유스탯:"+stat[1]+"\r\n"+"최대경험치:"+stat[2]+"\r\n"+"현재경험치:"+stat[3]+"\r\n"+"활력:"+stat[4]+"\r\n"+"근력:"+stat[5]+"\r\n"+"민첩:"+stat[6]
+                    +"\r\n"+"지력:"+stat[7]+"\r\n"+"손재주:"+stat[8]+"\r\n"+"총 활력:"+stat[9]+"\r\n"+"총 근력:"+stat[10]+"\r\n"+"총 민첩:"+stat[11]
                     +"\r\n"+"총 지력:"+stat[12]+"\r\n"+"총 손재주:"+stat[13]);
             W.flush();
             W.close();

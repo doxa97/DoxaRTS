@@ -11,11 +11,11 @@ public class JoinEvent implements Listener {
     @EventHandler
     public void PlayerJoin(PlayerJoinEvent e){
         Player player = e.getPlayer();
-        long[] stat = Stats.getStat(player.getUniqueId().toString());
-        if (!(stat[0] > 0)){
+        if (player.getLevel() == 0) {
             Stats.CreateNewStat(player.getUniqueId().toString());
+            player.setLevel(1);
         }
-        e.setJoinMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "어서 오십시요, "+ e.getPlayer() +" 용사님.");
+        e.setJoinMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "어서 오십시요, "+ e.getPlayer().getName() +" 용사님.");
     }
 
 
