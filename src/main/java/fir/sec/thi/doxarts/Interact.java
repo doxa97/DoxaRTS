@@ -55,6 +55,32 @@ public class Interact implements Listener {
                     case 8 : Stats.StatUp(stat, player, 8);
                 }
             }
+            if (event.getView().getTitle().contains("[ 대장간 ]")) {
+                event.setCancelled(true);
+                switch (event.getSlot()) {
+                    case 2:
+                        GUI.Upgrade(player);
+                    case 6:
+                        GUI.Skill(player);
+                }
+            }
+            if (event.getView().getTitle().contains("[ 장비 강화 ]")){
+                switch (event.getSlot()){
+                    case 0, 2, 3, 7 :
+                        event.setCancelled(true);
+                        player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "강화 틀은 건드릴 수 없습니다.");
+                    case 1 :
+                        if (!player.getItemOnCursor().getItemMeta().getLore().contains("[ 무기 ]")){
+                            event.setCancelled(true);
+                            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "무기 이외에는 강화할 수 없습니다.");
+                        }
+                    case 5, 6 :
+                        if (!player.getItemOnCursor().getItemMeta().getLore().contains("[ 재료 ]")){
+                            event.setCancelled(true);
+                            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "재료 이외에는 넣을 수 없습니다.");
+                        }
+                }
+            }
         }
     }
 

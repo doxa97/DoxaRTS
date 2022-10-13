@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import static fir.sec.thi.doxarts.Variable.accessory;
+import static fir.sec.thi.doxarts.Variable.weapon;
 
 
 public final class DoxaRTS extends JavaPlugin implements Listener {
@@ -215,11 +216,11 @@ public final class DoxaRTS extends JavaPlugin implements Listener {
                         }
                     }
                     for (int i = 1; i <= 4 ; i++){
-                        stat[9] = stat[4] + accessory.get(i+"con");
-                        stat[10] = stat[5] + accessory.get(i+"str");
-                        stat[11] = stat[6] + accessory.get(i+"agi");
-                        stat[12] = stat[7] + accessory.get(i+"int");
-                        stat[13] = stat[8] + accessory.get(i+"dex");
+                        stat[9] = stat[4] + accessory.get(i+"con") + weapon.get("con");
+                        stat[10] = stat[5] + accessory.get(i+"str") + weapon.get("str");
+                        stat[11] = stat[6] + accessory.get(i+"agi") + weapon.get("agi");
+                        stat[12] = stat[7] + accessory.get(i+"int") + weapon.get("int");
+                        stat[13] = stat[8] + accessory.get(i+"dex") + weapon.get("dex");
                     }
                     Stats.setStat(player.getUniqueId().toString(),stat);
                     Objects.requireNonNull(player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)).setBaseValue((double) (1 + stat[11])/100);

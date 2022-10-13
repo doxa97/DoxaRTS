@@ -40,14 +40,52 @@ public class GUI implements Listener {
     }
 
     public static void Smith(Player player){
-        Inventory smith = Bukkit.createInventory(null, 9,"[ S T A T U S ]");
+        Inventory smith = Bukkit.createInventory(null, 9,"[ 대장간 ]");
+
+        smith.setItem(2, GuiTool(Material.BARRIER,ChatColor.GOLD+ "[ 장비 강화 ]", Arrays.asList(ChatColor.GRAY+"장비를 강화할 수 있습니다.","누르면 장비 강화로 넘어갑니다."), 10000));
+        smith.setItem(6, GuiTool(Material.BARRIER,ChatColor.LIGHT_PURPLE+ "[ 무기 기술 ]", Arrays.asList(ChatColor.GRAY+"무기에 기술을 장착하거나 해제할 수 있습니다.","누르면 무기 기술로 넘어갑니다."), 10000));
 
         player.openInventory(smith);
 
     }
 
+    public static void Upgrade(Player player){
+        Inventory upgrade = Bukkit.createInventory(null, 9,"[ 장비 강화 ]");
+
+        upgrade.setItem(0,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"→",Arrays.asList("이 옆에 장비를 놓아주세요."),10000));
+        upgrade.setItem(2,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←",Arrays.asList("이 옆에 장비를 놓아주세요."),10000));
+
+        upgrade.setItem(3,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"→",Arrays.asList("이 옆에 재료를 놓아주세요."),10000));
+        upgrade.setItem(6,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←",Arrays.asList("이 옆에 재료를 놓아주세요."),10000));
+
+        upgrade.setItem(7,GuiTool(Material.GREEN_STAINED_GLASS_PANE,ChatColor.GREEN+"[ 강화 ]",Arrays.asList(ChatColor.GRAY+"누르면 장비 강화를 시도합니다.","비용 : "),10000));
+        upgrade.setItem(8, GuiTool(Material.BARRIER,ChatColor.RED+ "[ 뒤로 가기 ]", Arrays.asList(ChatColor.GRAY+"해당 작업을 벗어납니다.","누르면 대장간으로 돌아갑니다."), 10000));
+
+        player.openInventory(upgrade);
+
+    }
+
+    public static void Skill(Player player){
+        Inventory skill = Bukkit.createInventory(null, 18,"[ 무기 기술 ]");
+
+        skill.setItem(3,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"→",Arrays.asList("이 옆에 장비를 놓아주세요."),10000));
+        skill.setItem(5,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←",Arrays.asList("이 옆에 장비를 놓아주세요."),10000));
+        skill.setItem(9,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"→",Arrays.asList("이 옆에 기술 또는 제거제를 놓아주세요."),10000));
+        skill.setItem(11,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←→",Arrays.asList("이 옆에 기술 또는 제거제를 놓아주세요."),10000));
+        skill.setItem(13,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←→",Arrays.asList("이 옆에 기술 또는 제거제를 놓아주세요."),10000));
+        skill.setItem(15,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←→",Arrays.asList("이 옆에 기술 또는 제거제를 놓아주세요."),10000));
+        skill.setItem(17,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←",Arrays.asList("이 옆에 기술 또는 제거제를 놓아주세요."),10000));
+        skill.setItem(8, GuiTool(Material.BARRIER,ChatColor.RED+ "[ 뒤로 가기 ]", Arrays.asList(ChatColor.GRAY+"해당 작업을 벗어납니다.","누르면 대장간으로 돌아갑니다."), 10000));
+        skill.setItem(0, GuiTool(Material.GREEN_STAINED_GLASS_PANE,ChatColor.GREEN+ "[ 등록 및 제거 ]", Arrays.asList(ChatColor.GRAY+"기술을 등록 또는 제거합니다."), 10000));
+
+        player.openInventory(skill);
+
+    }
+
     public static void Shop(Player player){
-        Inventory shop = Bukkit.createInventory(null, 9,"[ S T A T U S ]");
+        Inventory shop = Bukkit.createInventory(null, 9,"[ 상점 ]");
+
+        shop.setItem(8, GuiTool(Material.BARRIER,ChatColor.RED+ "[ 뒤로 가기 ]", Arrays.asList(ChatColor.GRAY+"해당 작업을 벗어납니다.","누르면 대장간으로 돌아갑니다."), 10000));
 
         player.openInventory(shop);
 

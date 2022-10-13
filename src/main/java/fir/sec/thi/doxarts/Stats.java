@@ -100,7 +100,7 @@ public class Stats implements Listener {
                 stat[0] = stat[0] + 1;
                 stat[2] = (stat[0] * 2) + stat[3];
                 stat[1] = stat[1] + 3;
-                player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "Level Up!");
+                player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "Level Up! 더욱 강해지는 것이 느껴집니다..!");
                 setStat(player.getUniqueId().toString(), stat);
             }
         }
