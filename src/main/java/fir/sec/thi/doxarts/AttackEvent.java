@@ -116,96 +116,38 @@ public class AttackEvent implements Listener {
     @EventHandler
     public void EntityHit(EntityDamageByEntityEvent e){
         LivingEntity entity = (LivingEntity) e.getEntity();
+        LivingEntity damager = (LivingEntity) e.getDamager();
         entity.setNoDamageTicks(0);
-        if (e.getDamager() instanceof Player){
+        if (damager instanceof Player){
             Player player = (Player) e.getDamager();
             double Damage = e.getDamage();
             long[] Stat = Stats.getStat(e.getDamager().getUniqueId().toString());
             Damage = Critical(player, Stat[11], (int) Damage);
             e.setDamage(Damage);
         }
-        if (((LivingEntity) e.getEntity()).getHealth() <= e.getDamage()){
-            LivingEntity damager = (LivingEntity) e.getDamager();
+        if (e.getEntity().isDead()){
             if (damager.getName().contains("블루")){
                 if (entity.getName().contains("에르")){
-                    ItemStack item = new ItemStack(Material.DIAMOND, 1);
-                    ItemMeta meta = item.getItemMeta();
-                    Objects.requireNonNull(meta).setDisplayName("에르");
-                    meta.setLore(Arrays.asList("test1", "test2" + "test3"));
-                    item.setItemMeta(meta);
-                    fillChest(0, -60, 0, "world", item);
+                    fillChest(0,60,0,"world",GUI.GuiTool(Material.DIAMOND,ChatColor.DARK_GRAY+"에르 광물",
+                            Arrays.asList(ChatColor.GOLD+"[ 재료 ]",ChatColor.GRAY+"일반적으로 채광하여 사용하는 기본적인 광물이다."),10000));
                 }
-                else if (entity.getName().contains("킨")){
-                    ItemStack item = new ItemStack(Material.EMERALD, 1);
-                    ItemMeta meta = item.getItemMeta();
-                    Objects.requireNonNull(meta).setDisplayName("킨");
-                    meta.setLore(Arrays.asList("test1", "test2" + "test3"));
-                    item.setItemMeta(meta);
-                    fillChest(0, -60, 0, "world", item);
+                if (entity.getName().contains("킨")){
+                    fillChest(0,60,0,"world",GUI.GuiTool(Material.EMERALD,ChatColor.GREEN+"킨 광물",
+                            Arrays.asList(ChatColor.GOLD+"[ 재료 ]",ChatColor.GRAY+"희귀하게 발견되어 비싸게 팔리는 광물이다."),10000));
                 }
-            } else if (damager.getName().contains("레드")){
+            }
+            if (damager.getName().contains("레드")){
                 if (entity.getName().contains("에르")){
-                    ItemStack item = new ItemStack(Material.DIAMOND, 1);
-                    ItemMeta meta = item.getItemMeta();
-                    Objects.requireNonNull(meta).setDisplayName("에르");
-                    meta.setLore(Arrays.asList("test1", "test2" + "test3"));
-                    item.setItemMeta(meta);
-                    fillChest(2, -60, 0, "world", item);
+                    fillChest(3,60,3,"world",GUI.GuiTool(Material.DIAMOND,ChatColor.DARK_GRAY+"에르 광물",
+                            Arrays.asList(ChatColor.GOLD+"[ 재료 ]",ChatColor.GRAY+"일반적으로 채광하여 사용하는 기본적인 광물이다."),10000));
                 }
-                else if (entity.getName().contains("킨")){
-                    ItemStack item = new ItemStack(Material.EMERALD, 1);
-                    ItemMeta meta = item.getItemMeta();
-                    Objects.requireNonNull(meta).setDisplayName("킨");
-                    meta.setLore(Arrays.asList("test1", "test2" + "test3"));
-                    item.setItemMeta(meta);
-                    fillChest(2, -60, 0, "world", item);
+                if (entity.getName().contains("킨")){
+                    fillChest(3,60,3,"world",GUI.GuiTool(Material.EMERALD,ChatColor.GREEN+"킨 광물",
+                            Arrays.asList(ChatColor.GOLD+"[ 재료 ]",ChatColor.GRAY+"희귀하게 발견되어 비싸게 팔리는 광물이다."),10000));
                 }
             }
         }
     }
-
-    /*@EventHandler
-    public void EntityDead(EntityDeathEvent e){
-        if (e.getEntity().getLastDamageCause() instanceof EntityDamageByEntityEvent){
-            EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) e.getEntity().getLastDamageCause();
-            if (event.getDamager().getName().contains("블루")){
-                if (e.getEntity().getName().contains("에르")){
-                    ItemStack item = new ItemStack(Material.DIAMOND, 1);
-                    ItemMeta meta = item.getItemMeta();
-                    Objects.requireNonNull(meta).setDisplayName("에르");
-                    meta.setLore(Arrays.asList("test1", "test2" + "test3"));
-                    item.setItemMeta(meta);
-                    fillChest(0, -60, 0, "world", item);
-                }
-                if (e.getEntity().getName().contains("킨")){
-                    ItemStack item = new ItemStack(Material.EMERALD, 1);
-                    ItemMeta meta = item.getItemMeta();
-                    Objects.requireNonNull(meta).setDisplayName("킨");
-                    meta.setLore(Arrays.asList("test1", "test2" + "test3"));
-                    item.setItemMeta(meta);
-                    fillChest(0, -60, 0, "world", item);
-                }
-            }
-            if (event.getDamager().getName().contains("레드")){
-                if (e.getEntity().getName().contains("에르")){
-                    ItemStack item = new ItemStack(Material.DIAMOND, 1);
-                    ItemMeta meta = item.getItemMeta();
-                    Objects.requireNonNull(meta).setDisplayName("에르");
-                    meta.setLore(Arrays.asList("test1", "test2" + "test3"));
-                    item.setItemMeta(meta);
-                    fillChest(2, -60, 0, "world", item);
-                }
-                if (e.getEntity().getName().contains("킨")){
-                    ItemStack item = new ItemStack(Material.EMERALD, 1);
-                    ItemMeta meta = item.getItemMeta();
-                    Objects.requireNonNull(meta).setDisplayName("킨");
-                    meta.setLore(Arrays.asList("test1", "test2" + "test3"));
-                    item.setItemMeta(meta);
-                    fillChest(2, -60, 0, "world", item);
-                }
-            }
-        }
-    }*/
 
     public void fillChest(int xPos, int yPos, int zPos, String world, ItemStack... items){
         try {
