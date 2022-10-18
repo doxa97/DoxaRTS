@@ -21,12 +21,14 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.Random;
 
+import static fir.sec.thi.doxarts.Variable.weapon;
+
 public class AttackEvent implements Listener {
 
     public int Critical(Player player, Long LUK, int damage){
         long[] stat;
         stat = Stats.getStat(player.getUniqueId().toString());
-        int critical = (int)(LUK/100);
+        int critical = (int)(LUK/100) + weapon.get("crit")/100;
         if (critical > 100) critical = 100;
         if (critical < 0) critical = 0;
         stat[16] = critical;
@@ -124,6 +126,8 @@ public class AttackEvent implements Listener {
             long[] Stat = Stats.getStat(e.getDamager().getUniqueId().toString());
             Damage = Critical(player, Stat[11], (int) Damage);
             e.setDamage(Damage);
+            double Drain = Damage / weapon.get("drain");
+            player.setHealth(Double.parseDouble(String.format("%.2f",player.getHealth() + Drain)));
         }
         if (e.getEntity().isDead()){
             if (damager.getName().contains("블루")){

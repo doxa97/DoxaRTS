@@ -1,6 +1,5 @@
 package fir.sec.thi.doxarts;
 
-import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 import java.util.HashMap;
