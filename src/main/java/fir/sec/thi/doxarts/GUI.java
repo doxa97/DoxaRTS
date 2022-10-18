@@ -68,15 +68,29 @@ public class GUI implements Listener {
     public static void Skill(Player player){
         Inventory skill = Bukkit.createInventory(null, 18,"[ 무기 기술 ]");
 
-        skill.setItem(3,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"→",Arrays.asList("이 옆에 장비를 놓아주세요."),10000));
-        skill.setItem(5,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←",Arrays.asList("이 옆에 장비를 놓아주세요."),10000));
-        skill.setItem(9,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"→",Arrays.asList("이 옆에 기술 또는 제거제를 놓아주세요."),10000));
-        skill.setItem(11,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←→",Arrays.asList("이 옆에 기술 또는 제거제를 놓아주세요."),10000));
-        skill.setItem(13,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←→",Arrays.asList("이 옆에 기술 또는 제거제를 놓아주세요."),10000));
-        skill.setItem(15,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←→",Arrays.asList("이 옆에 기술 또는 제거제를 놓아주세요."),10000));
-        skill.setItem(17,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←",Arrays.asList("이 옆에 기술 또는 제거제를 놓아주세요."),10000));
-        skill.setItem(8, GuiTool(Material.BARRIER,ChatColor.RED+ "[ 뒤로 가기 ]", Arrays.asList(ChatColor.GRAY+"해당 작업을 벗어납니다.","누르면 대장간으로 돌아갑니다."), 10000));
-        skill.setItem(0, GuiTool(Material.GREEN_STAINED_GLASS_PANE,ChatColor.GREEN+ "[ 등록 및 제거 ]", Arrays.asList(ChatColor.GRAY+"기술을 등록 또는 제거합니다."), 10000));
+        if (player.getScoreboardTags().equals("magician")){
+            skill.setItem(3,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"→",Arrays.asList("이 옆에 장비를 놓아주세요."),10000));
+            skill.setItem(5,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←",Arrays.asList("이 옆에 장비를 놓아주세요."),10000));
+            skill.setItem(9,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"→",Arrays.asList("이 옆에 기술 또는 제거제를 놓아주세요."),10000));
+            skill.setItem(11,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←→",Arrays.asList("이 옆에 기술 또는 제거제를 놓아주세요."),10000));
+            skill.setItem(13,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←→",Arrays.asList("이 옆에 기술 또는 제거제를 놓아주세요."),10000));
+            skill.setItem(15,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←→",Arrays.asList("이 옆에 기술 또는 제거제를 놓아주세요."),10000));
+            skill.setItem(17,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←",Arrays.asList("이 옆에 기술 또는 제거제를 놓아주세요."),10000));
+            skill.setItem(8, GuiTool(Material.BARRIER,ChatColor.RED+ "[ 뒤로 가기 ]", Arrays.asList(ChatColor.GRAY+"해당 작업을 벗어납니다.","누르면 대장간으로 돌아갑니다."), 10000));
+            skill.setItem(0, GuiTool(Material.GREEN_STAINED_GLASS_PANE,ChatColor.GREEN+ "[ 등록 및 제거 ]", Arrays.asList(ChatColor.GRAY+"기술을 등록 또는 제거합니다."), 10000));
+        }
+        else {
+            skill.setItem(3,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"→",Arrays.asList("이 옆에 장비를 놓아주세요."),10000));
+            skill.setItem(5,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←",Arrays.asList("이 옆에 장비를 놓아주세요."),10000));
+            skill.setItem(9,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"→",Arrays.asList("이 옆에 기술 또는 제거제를 놓아주세요."),10000));
+            skill.setItem(9,GuiTool(Material.BARRIER,ChatColor.RED+"X",Arrays.asList("마법사 계열이 아니라면 제거가 불가능합니다."),10000));
+            skill.setItem(11,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←→",Arrays.asList("이 옆에 기술 또는 제거제를 놓아주세요."),10000));
+            skill.setItem(13,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←→",Arrays.asList("이 옆에 기술 또는 제거제를 놓아주세요."),10000));
+            skill.setItem(15,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←→",Arrays.asList("이 옆에 기술 또는 제거제를 놓아주세요."),10000));
+            skill.setItem(17,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←",Arrays.asList("이 옆에 기술 또는 제거제를 놓아주세요."),10000));
+            skill.setItem(8, GuiTool(Material.BARRIER,ChatColor.RED+ "[ 뒤로 가기 ]", Arrays.asList(ChatColor.GRAY+"해당 작업을 벗어납니다.","누르면 대장간으로 돌아갑니다."), 10000));
+            skill.setItem(0, GuiTool(Material.GREEN_STAINED_GLASS_PANE,ChatColor.GREEN+ "[ 등록 및 제거 ]", Arrays.asList(ChatColor.GRAY+"기술을 등록 또는 제거합니다."), 10000));
+        }
 
         player.openInventory(skill);
 

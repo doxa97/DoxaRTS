@@ -31,6 +31,7 @@ public final class DoxaRTS extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new Variable(), this);
         getServer().getPluginManager().registerEvents(new Teams(), this);
         getServer().getPluginManager().registerEvents(new Spawn(), this);
+        getServer().getPluginManager().registerEvents(new Upgrade(),this);
 
         getCommand("게임시작").setExecutor(new Command());
         getCommand("초기화").setExecutor(new Command());
