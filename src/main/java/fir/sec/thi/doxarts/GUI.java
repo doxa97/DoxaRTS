@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static fir.sec.thi.doxarts.Item.MagicianWeaponSetting;
+import static fir.sec.thi.doxarts.Item.NormalWeaponSetting;
+
 public class GUI implements Listener {
 
     public static ItemStack GuiTool(Material material, String DisplayName, List<String> Lore, int CustomModelData){
@@ -36,6 +39,36 @@ public class GUI implements Listener {
         status.setItem(8, GuiTool(Material.BOW,  ChatColor.GOLD+ "[ 손재주 ]", Arrays.asList(ChatColor.GRAY+"dsa","asd"), 10000));
 
         player.openInventory(status);
+
+    }
+
+    public static void SelectWeapon(Player player){
+        Inventory Select = Bukkit.createInventory(null, 9, "[ 무기 선택 ]");
+
+        if (player.getScoreboardTags().contains("worrier")){
+            Select.setItem(2 ,NormalWeaponSetting(player, 3,"끝 없는 광기","광기에 물든 어느 한 광전사가 사용했던, 이제는 주인 없는 검.",12,0.6,0,3,"대검 기본 공격","기본 공격 피해량 : 0"));
+            Select.setItem(4 ,NormalWeaponSetting(player, 4,"길 잃은 영혼의 인도자","보랗게 빛나는 빛은 길 잃은 영혼들의 안식처일 것이다.",16,0.3,0,6,"대검 기본 공격","기본 공격 피해량 : 0"));
+            Select.setItem(6 ,NormalWeaponSetting(player, 5,"심연의 송곳니","찢어질 듯한 고통이 울부짖는다.",9,0.65,0,4,"대검 기본 공격","기본 공격 피해량 : 0"));
+        }
+        if (player.getScoreboardTags().contains("swordsman")){
+            Select.setItem(2 ,NormalWeaponSetting(player, 6,"잠식된 어둠","어둠에 굴복한 검.",7,0.9,3,2,"직검 기본 공격","기본 공격 피해량 : 0"));
+            Select.setItem(4 ,NormalWeaponSetting(player, 7,"혼돈 속의 찬란함","찬란한 빛은 아직 혼돈에게 저항 중이다.",8,0.85,2,3,"직검 기본 공격","기본 공격 피해량 : 0"));
+            Select.setItem(6 ,NormalWeaponSetting(player, 8,"은하를 담은 도신","운석으로 제작한 은하를 담은 검.",6,0.8,5,3,"직검 기본 공격","기본 공격 피해량 : 0"));
+        }
+        if (player.getScoreboardTags().contains("archer")){
+            Select.setItem(3 ,NormalWeaponSetting(player, 9,"성스러운 신자의 유품","사용된 적이 없어 제대로 작동할 지 모르지만, 보장된 품질.",7,0.4,4,1,"장궁 기본 공격","기본 공격 피해량 : 0"));
+            Select.setItem(6 ,NormalWeaponSetting(player, 10,"꿰뚫는 눈","푸르게 빛나는 이 활은 상대를 꿰뚫는데 특화되어있다.",9,0.28,6,0,"장궁 기본 공격","기본 공격 피해량 : 0"));
+        }
+        if (player.getScoreboardTags().contains("assassin")){
+            Select.setItem(1 ,NormalWeaponSetting(player, 1,"현상금 사냥","현상금에 미친 어느 한 사냥꾼의 금으로 만든 단검.",3,1.1,7,2,"[ 단검 기본 공격 ]","기본 공격 피해량 : 0"));
+            Select.setItem(3 ,NormalWeaponSetting(player, 2,"파도 속 고요함","시끄러이 울려 퍼질 파도 속의 고요함. 베인 자도 고요해질까.",4,0.95,8,2,"[ 단검 기본 공격 ]","기본 공격 피해량 : 0"));
+            Select.setItem(5 ,NormalWeaponSetting(player, 13,"현상금 사냥","현상금에 미친 어느 한 사냥꾼의 금으로 만든 단검.",3,1,10,2,"[ 역수 단검 기본 공격 ]","기본 공격 피해량 : 0"));
+            Select.setItem(7 ,NormalWeaponSetting(player, 14,"파도 속 고요함","시끄러이 울려 퍼질 파도 속의 고요함. 베인 자도 고요해질까.",4,0.85,11,2,"[ 역수 단검 기본 공격 ]","기본 공격 피해량 : 0"));
+        }
+        if (player.getScoreboardTags().contains("magician")){
+            Select.setItem(3 ,MagicianWeaponSetting(player, 11,"고통의 신음","고통에 몸부림치는 비명소리가 귀에 들려온다.",6,0.6,2,0));
+            Select.setItem(6 ,MagicianWeaponSetting(player, 12,"정화의 손길","들고 있으면 소유자가 교화될 정도로 맑은 기운을 가졌다.",4,0.75,2,0));
+        }
 
     }
 

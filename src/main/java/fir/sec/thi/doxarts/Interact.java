@@ -2,20 +2,24 @@ package fir.sec.thi.doxarts;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static fir.sec.thi.doxarts.GUI.GuiTool;
+import static fir.sec.thi.doxarts.GUI.*;
 import static fir.sec.thi.doxarts.SkillSet.SkillSetting;
 import static fir.sec.thi.doxarts.Upgrade.Upgrading;
 
@@ -23,10 +27,24 @@ public class Interact implements Listener {
 
     public void PlayerInteract(PlayerInteractEvent event){
 
+        Player player = event.getPlayer();
+        Block block = event.getClickedBlock();
+        if (!(block.getType() == Material.CHEST) || !(block.getType() == Material.EMERALD_BLOCK) || !(block.getType() == Material.STONE_BUTTON)){
+            event.setCancelled(true);
+            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "특정 블럭에만 상호작용이 가능합니다.");
+        }
+
     }
 
-    public void EntityInteract(EntityInteractEvent event){
-
+    public void EntityInteract(PlayerInteractEntityEvent event){
+        LivingEntity entity = (LivingEntity) event.getRightClicked();
+        Player player = event.getPlayer();
+        if (entity.getName().contains("대장장이")){
+            Smith(player);
+        }
+        if (entity.getName().contains("상인")){
+            Shop(player);
+        }
     }
 
     public void SwapLeftHand(PlayerSwapHandItemsEvent event){
@@ -75,7 +93,7 @@ public class Interact implements Listener {
             }
             if (event.getView().getTitle().contains("[ 장비 강화 ]")){
                 switch (event.getRawSlot()){
-                    case 0, 2, 3, 7 :
+                    case 0, 2, 3 :
                         event.setCancelled(true);
                         player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "강화 틀은 건드릴 수 없습니다.");
                     case 1 :
@@ -114,6 +132,8 @@ public class Interact implements Listener {
                             player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "재료 이외에는 넣을 수 없습니다.");
                         }
                     case 8 :
+                        Smith(player);
+                    case 7 :
                         event.setCancelled(true);
                         ArrayList<String> lore = (ArrayList<String>) player.getOpenInventory().getTopInventory().getItem(7).getItemMeta().getLore();
                         for (int i = 0; i <= lore.size(); i++) {
@@ -163,7 +183,7 @@ public class Interact implements Listener {
                         }
                 }
             }
-            if (event.getView().getTitle().contains("[ 스킬 ]")){
+            if (event.getView().getTitle().contains("[ 기술 ]")){
                 switch (event.getRawSlot()){
                     case 0 :
                         SkillSetting(player);
@@ -189,7 +209,7 @@ public class Interact implements Listener {
                             player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "기술 등록 또는 제거 책 이외에는 올릴 수 없습니다.");
                         }
                     case 8 :
-
+                        Smith(player);
                     case 5,9,11,13,15,17 :
                         event.setCancelled(true);
                         player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "기본 틀은 건들 수 없습니다.");
@@ -198,6 +218,34 @@ public class Interact implements Listener {
         }
     }
     public void InventoryClose(InventoryCloseEvent event){
+
+        Player player = (Player) event.getPlayer();
+        if (player.getOpenInventory().getTitle().contains("[ 장비 강화 ]")){
+            ItemStack first = player.getOpenInventory().getTopInventory().getItem(1);
+            ItemStack second = player.getOpenInventory().getTopInventory().getItem(4);
+            ItemStack third = player.getOpenInventory().getTopInventory().getItem(5);
+            player.getInventory().setItem(0,first);
+            player.getInventory().addItem(second,third);
+        }
+        if (player.getOpenInventory().getTitle().contains("[ 기술 ]")){
+            if (player.getScoreboardTags().contains("magician")){
+                ItemStack first = player.getOpenInventory().getTopInventory().getItem(4);
+                ItemStack second = player.getOpenInventory().getTopInventory().getItem(10);
+                ItemStack third = player.getOpenInventory().getTopInventory().getItem(12);
+                ItemStack fourth = player.getOpenInventory().getTopInventory().getItem(14);
+                ItemStack fifth = player.getOpenInventory().getTopInventory().getItem(16);
+                player.getInventory().setItem(0,first);
+                player.getInventory().addItem(second,third,fourth,fifth);
+            }
+            else {
+                ItemStack first = player.getOpenInventory().getTopInventory().getItem(4);
+                ItemStack second = player.getOpenInventory().getTopInventory().getItem(12);
+                ItemStack third = player.getOpenInventory().getTopInventory().getItem(14);
+                ItemStack fourth = player.getOpenInventory().getTopInventory().getItem(16);
+                player.getInventory().setItem(0,first);
+                player.getInventory().addItem(second,third,fourth);
+            }
+        }
 
     }
 

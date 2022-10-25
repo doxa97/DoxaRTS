@@ -1,8 +1,6 @@
 package fir.sec.thi.doxarts;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Entity;
@@ -13,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static fir.sec.thi.doxarts.GUI.SelectWeapon;
 import static fir.sec.thi.doxarts.Teams.*;
 
 public class Command implements TabExecutor {
@@ -72,6 +71,18 @@ public class Command implements TabExecutor {
                                 entity.remove();
                             }
                         }
+                        try {
+                            TimeUnit.SECONDS.sleep(1);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                        if (online.getScoreboard().getTeams().equals("블루팀") || online.getScoreboard().getTeams().equals("레드팀")){
+                            SelectWeapon(online);
+                            online.setGameMode(GameMode.ADVENTURE);
+                        }
+                        else {
+                            online.setGameMode(GameMode.SPECTATOR);
+                        }
                     }
                 }
                 if (command.getName().equals("초기화")){
@@ -89,6 +100,18 @@ public class Command implements TabExecutor {
                         player.removeScoreboardTag("assassin");
                         player.removeScoreboardTag("archer");
                         player.removeScoreboardTag("magician");
+                        player.removeScoreboardTag("swordsman");
+                        Bukkit.getWorld("world").setGameRule(GameRule.KEEP_INVENTORY,true);
+                        Bukkit.getWorld("world").setGameRule(GameRule.DO_DAYLIGHT_CYCLE,false);
+                        Bukkit.getWorld("world").setGameRule(GameRule.DO_TILE_DROPS,false);
+                        Bukkit.getWorld("world").setGameRule(GameRule.RANDOM_TICK_SPEED,0);
+                        Bukkit.getWorld("world").setGameRule(GameRule.FALL_DAMAGE,false);
+                        Bukkit.getWorld("world").setGameRule(GameRule.DO_IMMEDIATE_RESPAWN,true);
+                        Bukkit.getWorld("world").setGameRule(GameRule.COMMAND_BLOCK_OUTPUT,false);
+                        Bukkit.getWorld("world").setGameRule(GameRule.DISABLE_RAIDS,true);
+                        Bukkit.getWorld("world").setGameRule(GameRule.DO_WEATHER_CYCLE,false);
+                        Bukkit.getWorld("world").setGameRule(GameRule.DO_TRADER_SPAWNING,false);
+                        Bukkit.getWorld("world").setGameRule(GameRule.DO_PATROL_SPAWNING,false);
                     }
                 }
             }
@@ -127,6 +150,7 @@ public class Command implements TabExecutor {
                 if (args.length == 0){
                     player.sendMessage(ChatColor.GRAY+ "===================="+ ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "===================="
                             +"\r\n"+ChatColor.WHITE+"/직업 전사" +ChatColor.DARK_GRAY+" 전사"+ChatColor.GRAY+"로 전직합니다."
+                            +"\r\n"+ChatColor.WHITE+"/직업 검사" +ChatColor.DARK_RED+" 검사"+ChatColor.GRAY+"로 전직합니다."
                             +"\r\n"+ChatColor.WHITE+"/직업 도적" +ChatColor.GOLD+" 도적"+ChatColor.GRAY+"으로 전직합니다."
                             +"\r\n"+ChatColor.WHITE+"/직업 궁수" +ChatColor.GREEN+" 궁수"+ChatColor.GRAY+"로 전직합니다."
                             +"\r\n"+ChatColor.WHITE+"/직업 마법사" +ChatColor.LIGHT_PURPLE+" 마법사"+ChatColor.GRAY+"로 전직합니다."
@@ -134,31 +158,43 @@ public class Command implements TabExecutor {
                 }
                 else {
                     if (args[0].equals("전사")){
-                        player.addScoreboardTag("Worrier");
-                        player.removeScoreboardTag("Assassin");
+                        player.addScoreboardTag("worrier");
+                        player.removeScoreboardTag("assassin");
+                        player.removeScoreboardTag("magician");
+                        player.removeScoreboardTag("archer");
+                        player.removeScoreboardTag("swordsman");
+                        player.sendMessage(ChatColor.AQUA+"[ DOXRTS ]" +ChatColor.DARK_GRAY+" 전사"+ChatColor.GRAY+"로 전직했습니다!");
+                    }
+                    if (args[0].equals("검사")){
+                        player.addScoreboardTag("swordsman");
+                        player.removeScoreboardTag("worrier");
+                        player.removeScoreboardTag("assassin");
                         player.removeScoreboardTag("magician");
                         player.removeScoreboardTag("archer");
                         player.sendMessage(ChatColor.AQUA+"[ DOXRTS ]" +ChatColor.DARK_GRAY+" 전사"+ChatColor.GRAY+"로 전직했습니다!");
                     }
                     if (args[0].equals("도적")){
-                        player.removeScoreboardTag("Worrier");
-                        player.addScoreboardTag("Assassin");
+                        player.removeScoreboardTag("worrier");
+                        player.addScoreboardTag("assassin");
                         player.removeScoreboardTag("magician");
                         player.removeScoreboardTag("archer");
+                        player.removeScoreboardTag("swordsman");
                         player.sendMessage(ChatColor.AQUA+"[ DOXRTS ]" +ChatColor.GOLD+" 도적"+ChatColor.GRAY+"으로 전직했습니다!");
                     }
                     if (args[0].equals("궁수")){
-                        player.removeScoreboardTag("Worrier");
-                        player.removeScoreboardTag("Assassin");
+                        player.removeScoreboardTag("worrier");
+                        player.removeScoreboardTag("assassin");
                         player.removeScoreboardTag("magician");
                         player.addScoreboardTag("archer");
+                        player.removeScoreboardTag("swordsman");
                         player.sendMessage(ChatColor.AQUA+"[ DOXRTS ]" +ChatColor.GREEN+" 궁수"+ChatColor.GRAY+"로 전직했습니다!");
                     }
                     if (args[0].equals("마법사")){
-                        player.removeScoreboardTag("Worrier");
-                        player.removeScoreboardTag("Assassin");
+                        player.removeScoreboardTag("worrier");
+                        player.removeScoreboardTag("assassin");
                         player.addScoreboardTag("magician");
                         player.removeScoreboardTag("archer");
+                        player.removeScoreboardTag("swordsman");
                         player.sendMessage(ChatColor.AQUA+"[ DOXRTS ]" +ChatColor.LIGHT_PURPLE+" 마법사"+ChatColor.GRAY+"로 전직했습니다!");
                     }
 
