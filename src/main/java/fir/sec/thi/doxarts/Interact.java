@@ -1,6 +1,7 @@
 package fir.sec.thi.doxarts;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityInteractEvent;
@@ -12,7 +13,10 @@ import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import static fir.sec.thi.doxarts.GUI.GuiTool;
+import static fir.sec.thi.doxarts.SkillSet.SkillSetting;
 import static fir.sec.thi.doxarts.Upgrade.Upgrading;
 
 public class Interact implements Listener {
@@ -75,9 +79,34 @@ public class Interact implements Listener {
                         event.setCancelled(true);
                         player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "강화 틀은 건드릴 수 없습니다.");
                     case 1 :
-                        if (!player.getItemOnCursor().getItemMeta().getLore().contains("[ 무기 ]")){
+                        ArrayList<String> getUpgrade = (ArrayList<String>) player.getItemOnCursor().getItemMeta().getLore();
+                        if (!getUpgrade.contains("[ 무기 ]")){
                             event.setCancelled(true);
                             player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "무기 이외에는 강화할 수 없습니다.");
+                        }
+                        else {
+                            for (int i = 0; i <= getUpgrade.size(); i++) {
+                                if (getUpgrade.get(i).contains("강화 수치")){
+                                    int upgrade = Integer.parseInt(getUpgrade.get(i).replace("강화","").replace("수치","").replace(" ","")
+                                            .replace(":",""));
+                                    switch (upgrade){
+                                        case 1 :
+                                            player.getOpenInventory().getTopInventory().setItem(7,GuiTool(Material.GREEN_STAINED_GLASS_PANE,ChatColor.GREEN+"[ 강화 ]",Arrays.asList(ChatColor.GRAY+"누르면 장비 강화를 시도합니다.","필요 킨 광물 : 0","필요 에르 광물 : 12"),10000));
+                                        case 2 :
+                                            player.getOpenInventory().getTopInventory().setItem(7,GuiTool(Material.GREEN_STAINED_GLASS_PANE,ChatColor.GREEN+"[ 강화 ]",Arrays.asList(ChatColor.GRAY+"누르면 장비 강화를 시도합니다.","필요 킨 광물 : 4","필요 에르 광물 : 24"),10000));
+                                        case 3 :
+                                            player.getOpenInventory().getTopInventory().setItem(7,GuiTool(Material.GREEN_STAINED_GLASS_PANE,ChatColor.GREEN+"[ 강화 ]",Arrays.asList(ChatColor.GRAY+"누르면 장비 강화를 시도합니다.","필요 킨 광물 : 8","필요 에르 광물 : 36"),10000));
+                                        case 4 :
+                                            player.getOpenInventory().getTopInventory().setItem(7,GuiTool(Material.GREEN_STAINED_GLASS_PANE,ChatColor.GREEN+"[ 강화 ]",Arrays.asList(ChatColor.GRAY+"누르면 장비 강화를 시도합니다.","필요 킨 광물 : 12","필요 에르 광물 : 48"),10000));
+                                        case 5 :
+                                            player.getOpenInventory().getTopInventory().setItem(7,GuiTool(Material.GREEN_STAINED_GLASS_PANE,ChatColor.GREEN+"[ 강화 ]",Arrays.asList(ChatColor.GRAY+"누르면 장비 강화를 시도합니다.","필요 킨 광물 : 16","필요 에르 광물 : 60"),10000));
+                                        case 6 :
+                                            player.getOpenInventory().getTopInventory().setItem(7,GuiTool(Material.GREEN_STAINED_GLASS_PANE,ChatColor.GREEN+"[ 강화 ]",Arrays.asList(ChatColor.GRAY+"누르면 장비 강화를 시도합니다.","필요 킨 광물 : 25","필요 에르 광물 : 64"),10000));
+                                        case 7 :
+                                            player.getOpenInventory().getTopInventory().setItem(7,GuiTool(Material.GREEN_STAINED_GLASS_PANE,ChatColor.GREEN+"[ 강화 ]",Arrays.asList(ChatColor.GRAY+"누르면 장비 강화를 시도합니다.","필요 킨 광물 : 0","필요 에르 광물 : 0"),10000));
+                                    }
+                                }
+                            }
                         }
                     case 5, 6 :
                         if (!player.getItemOnCursor().getItemMeta().getLore().contains("[ 재료 ]")){
@@ -86,7 +115,7 @@ public class Interact implements Listener {
                         }
                     case 8 :
                         event.setCancelled(true);
-                        ArrayList<String> lore = (ArrayList<String>) player.getOpenInventory().getItem(5).getItemMeta().getLore();
+                        ArrayList<String> lore = (ArrayList<String>) player.getOpenInventory().getTopInventory().getItem(7).getItemMeta().getLore();
                         for (int i = 0; i <= lore.size(); i++) {
                             int NeedEr = 0;
                             int NeedKin = 0;
@@ -134,9 +163,40 @@ public class Interact implements Listener {
                         }
                 }
             }
+            if (event.getView().getTitle().contains("[ 스킬 ]")){
+                switch (event.getRawSlot()){
+                    case 0 :
+                        SkillSetting(player);
+                    case 4 :
+                        if (!player.getItemOnCursor().getItemMeta().getLore().contains("[ 무기 ]")){
+                            event.setCancelled(true);
+                            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "무기 이외에는 올릴 수 없습니다.");
+                        }
+                    case 10 :
+                        if (player.getScoreboardTags().contains("magician")){
+                            if (!player.getItemOnCursor().getItemMeta().getLore().contains("[ 기술 ]") || !player.getItemOnCursor().getItemMeta().getLore().contains("[ 제거 ]")) {
+                                event.setCancelled(true);
+                                player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]" + ChatColor.GRAY + "기술 등록 또는 제거 책 이외에는 올릴 수 없습니다.");
+                            }
+                        }
+                        else {
+                            event.setCancelled(true);
+                            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]" + ChatColor.GRAY + "마법사 이외에는 선택할 수 없습니다.");
+                        }
+                    case 12, 14, 16 :
+                        if (!player.getItemOnCursor().getItemMeta().getLore().contains("[ 기술 ]") || !player.getItemOnCursor().getItemMeta().getLore().contains("[ 제거 ]")){
+                            event.setCancelled(true);
+                            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "기술 등록 또는 제거 책 이외에는 올릴 수 없습니다.");
+                        }
+                    case 8 :
+
+                    case 5,9,11,13,15,17 :
+                        event.setCancelled(true);
+                        player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "기본 틀은 건들 수 없습니다.");
+                }
+            }
         }
     }
-
     public void InventoryClose(InventoryCloseEvent event){
 
     }
