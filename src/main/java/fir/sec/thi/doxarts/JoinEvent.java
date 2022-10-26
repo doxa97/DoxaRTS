@@ -15,7 +15,7 @@ public class JoinEvent implements Listener {
             Stats.CreateNewStat(player.getUniqueId().toString());
             player.setLevel(1);
         }
-        e.setJoinMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "어서 오십시요, "+ e.getPlayer().getName() +" 용사님.");
+        e.setJoinMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "어서 오십시오, "+ player.getName() +" 용사님.");
     }
 
 

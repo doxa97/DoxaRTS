@@ -44,7 +44,6 @@ public class SkillSet implements Listener {
                 if (Weapon.get(i+1).contains("[ 비어 있음 ]")){
                     if (first.getItemMeta().getLore().contains("[ 기술 ]")){
                         Weapon.set(i+1,"[ "+first.getItemMeta().getDisplayName()+" ]");
-                        Weapon.addAll(i+2, First);
                         player.sendMessage(ChatColor.AQUA+"[ DOXRTS ]" + ChatColor.GRAY + " 첫번째 슬롯에 기술을 정상 등록하였습니다.");
                     }
                     else {
@@ -72,7 +71,6 @@ public class SkillSet implements Listener {
                 if (Weapon.get(i+1).contains("[ 비어 있음 ]")){
                     if (second.getItemMeta().getLore().contains("[ 기술 ]")){
                         Weapon.set(i+1,"[ "+second.getItemMeta().getDisplayName()+" ]");
-                        Weapon.addAll(i+2, Second);
                         player.sendMessage(ChatColor.AQUA+"[ DOXRTS ]" + ChatColor.GRAY + " 두번째 슬롯에 기술을 정상 등록하였습니다.");
                     }
                     else {
@@ -100,7 +98,6 @@ public class SkillSet implements Listener {
                 if (Weapon.get(i+1).contains("[ 비어 있음 ]")){
                     if (third.getItemMeta().getLore().contains("[ 기술 ]")){
                         Weapon.set(i+1,"[ "+third.getItemMeta().getDisplayName()+" ]");
-                        Weapon.addAll(i+2, Third);
                         player.sendMessage(ChatColor.AQUA+"[ DOXRTS ]" + ChatColor.GRAY + " 세번째 슬롯에 기술을 정상 등록하였습니다.");
                     }
                     else {
@@ -128,7 +125,6 @@ public class SkillSet implements Listener {
                 if (Weapon.get(i+1).contains("[ 비어 있음 ]")){
                     if (fourth.getItemMeta().getLore().contains("[ 기술 ]")){
                         Weapon.set(i+1,"[ "+fourth.getItemMeta().getDisplayName()+" ]");
-                        Weapon.addAll(i+2, Fourth);
                         player.sendMessage(ChatColor.AQUA+"[ DOXRTS ]" + ChatColor.GRAY + " 네번째 슬롯에 기술을 정상 등록하였습니다.");
                     }
                     else {
@@ -139,8 +135,8 @@ public class SkillSet implements Listener {
                     if (fourth.getItemMeta().getLore().contains("[ 제거 ]")){
                         player.sendMessage(ChatColor.AQUA+"[ DOXRTS ]" + ChatColor.GRAY + " 네번째 슬롯을 정상적으로 제거했습니다.");
                         Weapon.set(i+1,"[ 비어 있음 ]");
-                        for (int delete = Weapon.size(); delete > i+1; delete--){
-                            Fourth.remove(delete);
+                        if (Weapon.size() >= i + 2) {
+                            Fourth.subList(i + 2, Weapon.size() + 1).clear();
                         }
                     }
                     else {

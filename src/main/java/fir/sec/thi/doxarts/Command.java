@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import static fir.sec.thi.doxarts.GUI.SelectWeapon;
 import static fir.sec.thi.doxarts.Teams.*;
+import static fir.sec.thi.doxarts.Variable.money;
 
 public class Command implements TabExecutor {
 
@@ -96,6 +97,8 @@ public class Command implements TabExecutor {
                             online.getInventory().setItem(i, air);
                             online.updateInventory();
                         }
+                        money.put("red",0);
+                        money.put("blue",0);
                         player.removeScoreboardTag("worrier");
                         player.removeScoreboardTag("assassin");
                         player.removeScoreboardTag("archer");

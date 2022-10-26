@@ -19,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static fir.sec.thi.doxarts.BuyAndSell.*;
 import static fir.sec.thi.doxarts.GUI.*;
 import static fir.sec.thi.doxarts.SkillSet.SkillSetting;
 import static fir.sec.thi.doxarts.Upgrade.Upgrading;
@@ -31,7 +32,7 @@ public class Interact implements Listener {
         Block block = event.getClickedBlock();
         if (!(block.getType() == Material.CHEST) || !(block.getType() == Material.EMERALD_BLOCK) || !(block.getType() == Material.STONE_BUTTON)){
             event.setCancelled(true);
-            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "특정 블럭에만 상호작용이 가능합니다.");
+            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "특정 블럭에만 상호작용이 가능합니다.");
         }
 
     }
@@ -48,8 +49,11 @@ public class Interact implements Listener {
     }
 
     public void SwapLeftHand(PlayerSwapHandItemsEvent event){
-        event.setCancelled(true);
-        event.getPlayer().sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "왼손 사용은 불가능합니다.");
+        Player player = event.getPlayer();
+        if (!player.getScoreboardTags().contains("assassin")){
+            event.setCancelled(true);
+            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "왼손 사용은 불가능합니다.");
+        }
     }
 
     public void InventoryClick(InventoryClickEvent event){
@@ -57,17 +61,19 @@ public class Interact implements Listener {
         long[] stat = Stats.getStat(player.getUniqueId().toString());
         if (event.getClickedInventory().getType() == InventoryType.PLAYER){
             if (event.getSlot() == -106){
-                event.setCancelled(true);
-                player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "왼손 사용은 불가능합니다.");
+                if (!player.getScoreboardTags().contains("assassin")){
+                    event.setCancelled(true);
+                    player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "왼손 사용은 불가능합니다.");
+                }
             }
             if (event.getSlot() == 9 && event.getSlot() == 10 && event.getSlot() == 11 && event.getSlot() == 12){
                 if (!player.getItemOnCursor().getItemMeta().getLore().contains("[ 장신구 ]")){
                     event.setCancelled(true);
-                    player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "장신구 란에는 장신구만 장비가 가능합니다.");
+                    player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "장신구 란에는 장신구만 장비가 가능합니다.");
                 }
                 else {
                     player.getItemOnCursor().setAmount(0);
-                    player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "정상적으로 장신구를 장착하였습니다.");
+                    player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "정상적으로 장신구를 장착하였습니다.");
                 }
             }
         }
@@ -95,12 +101,12 @@ public class Interact implements Listener {
                 switch (event.getRawSlot()){
                     case 0, 2, 3 :
                         event.setCancelled(true);
-                        player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "강화 틀은 건드릴 수 없습니다.");
+                        player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "강화 틀은 건드릴 수 없습니다.");
                     case 1 :
                         ArrayList<String> getUpgrade = (ArrayList<String>) player.getItemOnCursor().getItemMeta().getLore();
                         if (!getUpgrade.contains("[ 무기 ]")){
                             event.setCancelled(true);
-                            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "무기 이외에는 강화할 수 없습니다.");
+                            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "무기 이외에는 강화할 수 없습니다.");
                         }
                         else {
                             for (int i = 0; i <= getUpgrade.size(); i++) {
@@ -129,7 +135,7 @@ public class Interact implements Listener {
                     case 5, 6 :
                         if (!player.getItemOnCursor().getItemMeta().getLore().contains("[ 재료 ]")){
                             event.setCancelled(true);
-                            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "재료 이외에는 넣을 수 없습니다.");
+                            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "재료 이외에는 넣을 수 없습니다.");
                         }
                     case 8 :
                         Smith(player);
@@ -164,7 +170,7 @@ public class Interact implements Listener {
                                 HaveKin = HaveKin + First.getAmount();
                             }
                             if (NeedKin > HaveKin || NeedEr > HaveEr){
-                                player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "재료가 부족합니다!");
+                                player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "재료가 부족합니다!");
                             }else {
                                 if (First.getItemMeta().getDisplayName().contains("에르")){
                                     player.getOpenInventory().getItem(5).setAmount(HaveEr - NeedEr);
@@ -190,29 +196,93 @@ public class Interact implements Listener {
                     case 4 :
                         if (!player.getItemOnCursor().getItemMeta().getLore().contains("[ 무기 ]")){
                             event.setCancelled(true);
-                            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "무기 이외에는 올릴 수 없습니다.");
+                            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "무기 이외에는 올릴 수 없습니다.");
                         }
                     case 10 :
                         if (player.getScoreboardTags().contains("magician")){
                             if (!player.getItemOnCursor().getItemMeta().getLore().contains("[ 기술 ]") || !player.getItemOnCursor().getItemMeta().getLore().contains("[ 제거 ]")) {
                                 event.setCancelled(true);
-                                player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]" + ChatColor.GRAY + "기술 등록 또는 제거 책 이외에는 올릴 수 없습니다.");
+                                player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] " + ChatColor.GRAY + "기술 등록 또는 제거 책 이외에는 올릴 수 없습니다.");
                             }
                         }
                         else {
                             event.setCancelled(true);
-                            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]" + ChatColor.GRAY + "마법사 이외에는 선택할 수 없습니다.");
+                            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] " + ChatColor.GRAY + "마법사 이외에는 선택할 수 없습니다.");
                         }
                     case 12, 14, 16 :
                         if (!player.getItemOnCursor().getItemMeta().getLore().contains("[ 기술 ]") || !player.getItemOnCursor().getItemMeta().getLore().contains("[ 제거 ]")){
                             event.setCancelled(true);
-                            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "기술 등록 또는 제거 책 이외에는 올릴 수 없습니다.");
+                            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "기술 등록 또는 제거 책 이외에는 올릴 수 없습니다.");
                         }
                     case 8 :
                         Smith(player);
                     case 5,9,11,13,15,17 :
                         event.setCancelled(true);
-                        player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "기본 틀은 건들 수 없습니다.");
+                        player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "기본 틀은 건들 수 없습니다.");
+                }
+            }
+            if (event.getView().getTitle().contains("[ 상점 ]")){
+                if (event.getCurrentItem().getItemMeta().getLore().contains("[ 상점 ]")){
+                    if (event.getClick().isLeftClick()){
+                        if (event.getClick().isShiftClick()){
+                            x64Buy(player);
+                        }
+                        else {
+                            Buy(player);
+                        }
+                    }
+                    if (event.getClick().isRightClick()){
+                        if (event.getClick().isShiftClick()){
+                            x64Sell(player);
+                        }
+                        else {
+                            Sell(player);
+                        }
+                    }
+
+                    event.setCancelled(true);
+                }
+                else {
+                    if (event.getRawSlot() == 4){
+                        SkillShop(player);
+                    }
+                    else {
+                        event.setCancelled(true);
+                        player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "상점 물품 이외에는 건들 수 없습니다.");
+                    }
+
+                }
+            }
+            if (event.getView().getTitle().contains("[ 기술 관련 상점 ]")){
+                if (event.getCurrentItem().getItemMeta().getLore().contains("[ 상점 ]")){
+                    if (event.getClick().isLeftClick()){
+                        if (event.getClick().isShiftClick()){
+                            x64Buy(player);
+                        }
+                        else {
+                            Buy(player);
+                        }
+                    }
+                    if (event.getClick().isRightClick()){
+                        if (event.getClick().isShiftClick()){
+                            x64Sell(player);
+                        }
+                        else {
+                            Sell(player);
+                        }
+                    }
+
+                    event.setCancelled(true);
+                }
+                else {
+                    if (event.getRawSlot() == 4){
+                        Shop(player);
+                    }
+                    else {
+                        event.setCancelled(true);
+                        player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "상점 물품 이외에는 건들 수 없습니다.");
+                    }
+
                 }
             }
         }
@@ -224,8 +294,7 @@ public class Interact implements Listener {
             ItemStack first = player.getOpenInventory().getTopInventory().getItem(1);
             ItemStack second = player.getOpenInventory().getTopInventory().getItem(4);
             ItemStack third = player.getOpenInventory().getTopInventory().getItem(5);
-            player.getInventory().setItem(0,first);
-            player.getInventory().addItem(second,third);
+            player.getInventory().addItem(first,second,third);
         }
         if (player.getOpenInventory().getTitle().contains("[ 기술 ]")){
             if (player.getScoreboardTags().contains("magician")){
@@ -234,16 +303,14 @@ public class Interact implements Listener {
                 ItemStack third = player.getOpenInventory().getTopInventory().getItem(12);
                 ItemStack fourth = player.getOpenInventory().getTopInventory().getItem(14);
                 ItemStack fifth = player.getOpenInventory().getTopInventory().getItem(16);
-                player.getInventory().setItem(0,first);
-                player.getInventory().addItem(second,third,fourth,fifth);
+                player.getInventory().addItem(first,second,third,fourth,fifth);
             }
             else {
                 ItemStack first = player.getOpenInventory().getTopInventory().getItem(4);
                 ItemStack second = player.getOpenInventory().getTopInventory().getItem(12);
                 ItemStack third = player.getOpenInventory().getTopInventory().getItem(14);
                 ItemStack fourth = player.getOpenInventory().getTopInventory().getItem(16);
-                player.getInventory().setItem(0,first);
-                player.getInventory().addItem(second,third,fourth);
+                player.getInventory().addItem(first,second,third,fourth);
             }
         }
 

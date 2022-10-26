@@ -26,9 +26,10 @@ import static fir.sec.thi.doxarts.Variable.weapon;
 public class AttackEvent implements Listener {
 
     public int Critical(Player player, Long LUK, int damage){
+        String name = player.getName();
         long[] stat;
         stat = Stats.getStat(player.getUniqueId().toString());
-        int critical = (int)(LUK/100) + weapon.get("crit")/100;
+        int critical = (int)(LUK/100) + weapon.get(name+"crit")/100;
         if (critical > 100) critical = 100;
         if (critical < 0) critical = 0;
         stat[16] = critical;
@@ -53,6 +54,7 @@ public class AttackEvent implements Listener {
         Player p = e.getPlayer();
         Action a = e.getAction();
         ItemMeta i = p.getInventory().getItemInMainHand().getItemMeta();
+        ItemMeta l = p.getInventory().getItemInOffHand().getItemMeta();
         if (p.getInventory().getItemInMainHand().getType().equals(Material.STICK)) {
             if (a == Action.LEFT_CLICK_AIR) {
                 if (!p.isSneaking()) {
@@ -73,7 +75,15 @@ public class AttackEvent implements Listener {
                         if (Objects.requireNonNull(Objects.requireNonNull(i).getLore()).contains("[ 무기 ]")) {
                             e.setCancelled(true);
                             String s = String.valueOf(i.getLore().contains("첫번째 슬롯"));
-                            if (!s.contains("비어있음")){
+                            if (!s.contains("비어 있음")){
+                                String skill = s.replace("첫번째 슬롯 : ", "").replace("[ ","").replace(" ]","");
+                                p.performCommand("cast " + skill);
+                            }
+                        }
+                        if (Objects.requireNonNull(Objects.requireNonNull(l).getLore()).contains("[ 무기 ]")) {
+                            e.setCancelled(true);
+                            String s = String.valueOf(l.getLore().contains("첫번째 슬롯"));
+                            if (!s.contains("비어 있음")){
                                 String skill = s.replace("첫번째 슬롯 : ", "").replace("[ ","").replace(" ]","");
                                 p.performCommand("cast " + skill);
                             }
@@ -83,7 +93,15 @@ public class AttackEvent implements Listener {
                     if (Objects.requireNonNull(Objects.requireNonNull(i).getLore()).contains("[ 무기 ]")) {
                         e.setCancelled(true);
                         String s = String.valueOf(i.getLore().contains("세번째 슬롯"));
-                        if (!s.contains("비어있음")){
+                        if (!s.contains("비어 있음")){
+                            String skill = s.replace("세번째 슬롯 : ", "").replace("[ ","").replace(" ]","");
+                            p.performCommand("cast " + skill);
+                        }
+                    }
+                    if (Objects.requireNonNull(Objects.requireNonNull(l).getLore()).contains("[ 무기 ]")) {
+                        e.setCancelled(true);
+                        String s = String.valueOf(l.getLore().contains("세번째 슬롯"));
+                        if (!s.contains("비어 있음")){
                             String skill = s.replace("세번째 슬롯 : ", "").replace("[ ","").replace(" ]","");
                             p.performCommand("cast " + skill);
                         }
@@ -94,17 +112,32 @@ public class AttackEvent implements Listener {
                     if (Objects.requireNonNull(Objects.requireNonNull(i).getLore()).contains("[ 무기 ]")){
                         e.setCancelled(true);
                         String s = String.valueOf(i.getLore().contains("두번째 슬롯"));
-                        if (!s.contains("비어있음")){
+                        if (!s.contains("비어 있음")){
                             String skill = s.replace("두번째 슬롯 : ","").replace("[ ","").replace(" ]","");
                             p.performCommand("cast " + skill);
                         }
-
+                    }
+                    if (Objects.requireNonNull(Objects.requireNonNull(l).getLore()).contains("[ 무기 ]")){
+                        e.setCancelled(true);
+                        String s = String.valueOf(l.getLore().contains("두번째 슬롯"));
+                        if (!s.contains("비어 있음")){
+                            String skill = s.replace("두번째 슬롯 : ","").replace("[ ","").replace(" ]","");
+                            p.performCommand("cast " + skill);
+                        }
                     }
                 } else if (p.isSneaking()){
                     if (Objects.requireNonNull(Objects.requireNonNull(i).getLore()).contains("[ 무기 ]")){
                         e.setCancelled(true);
                         String s = String.valueOf(i.getLore().contains("네번째 슬롯"));
-                        if (!s.contains("비어있음")){
+                        if (!s.contains("비어 있음")){
+                            String skill = s.replace("네번째 슬롯 : ","").replace("[ ","").replace(" ]","");
+                            p.performCommand("cast " + skill);
+                        }
+                    }
+                    if (Objects.requireNonNull(Objects.requireNonNull(l).getLore()).contains("[ 무기 ]")){
+                        e.setCancelled(true);
+                        String s = String.valueOf(l.getLore().contains("네번째 슬롯"));
+                        if (!s.contains("비어 있음")){
                             String skill = s.replace("네번째 슬롯 : ","").replace("[ ","").replace(" ]","");
                             p.performCommand("cast " + skill);
                         }
@@ -122,11 +155,12 @@ public class AttackEvent implements Listener {
         entity.setNoDamageTicks(0);
         if (damager instanceof Player){
             Player player = (Player) e.getDamager();
+            String name = player.getName();
             double Damage = e.getDamage();
             long[] Stat = Stats.getStat(e.getDamager().getUniqueId().toString());
             Damage = Critical(player, Stat[11], (int) Damage);
             e.setDamage(Damage);
-            double Drain = Damage / weapon.get("drain");
+            double Drain = Damage / weapon.get(name+"drain");
             player.setHealth(Double.parseDouble(String.format("%.2f",player.getHealth() + Drain)));
         }
         if (e.getEntity().isDead()){
