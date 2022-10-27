@@ -164,7 +164,7 @@ public class GUI implements Listener {
     public static void SkillShop(Player player){
         Inventory shop = Bukkit.createInventory(null, 54,"[ 상점 ]");
 
-        shop.setItem(10, ShopItemSetting(Material.BOOK,1,ChatColor.GRAY+"올려 베기","skill","물리 계열"+"\r\n"+"대상을 올려 베어 피해를 입히는 기술이다.",700,300));
+        shop.setItem(10, ShopItemSetting(Material.BOOK,1,ChatColor.GRAY+"올려 베기","skill","물리 계열"+"\r\n"+"돌진 후 대상을 올려 베어 피해를 입히는 기술이다.",700,300));
         shop.setItem(11, ShopItemSetting(Material.BOOK,1,ChatColor.GRAY+"십자 베기","skill","물리 계열"+"\r\n"+"십자로 전방을 베어 피해를 입히는 기술이다.",700,300));
         shop.setItem(12, ShopItemSetting(Material.BOOK,1,ChatColor.GRAY+"연격","skill","물리 계열"+"\r\n"+"연속해서 전방을 베어 피해를 입히는 기술이다.",700,300));
         shop.setItem(13, ShopItemSetting(Material.BOOK,1,ChatColor.GRAY+"참격","skill","물리 + 마법 계열"+"\r\n"+"전방으로 검기를 내보내어 피해를 입히는 기술이다.",700,300));
