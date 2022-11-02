@@ -15,13 +15,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static fir.sec.thi.doxarts.Gui.GUI.RunSound;
-import static fir.sec.thi.doxarts.Gui.GUI.SelectWeapon;
 import static fir.sec.thi.doxarts.Game.Teams.*;
+import static fir.sec.thi.doxarts.Gui.GUI.*;
 import static fir.sec.thi.doxarts.Shop.Money.RemovePerin;
 import static fir.sec.thi.doxarts.Shop.Money.SetPerin;
 import static fir.sec.thi.doxarts.Variable.money;
 import static fir.sec.thi.doxarts.Variable.win;
+import static org.bukkit.Bukkit.getServer;
 
 public class Command implements TabExecutor {
 
@@ -154,6 +154,37 @@ public class Command implements TabExecutor {
                         Bukkit.getWorld("world").setGameRule(GameRule.DO_WEATHER_CYCLE,false);
                         Bukkit.getWorld("world").setGameRule(GameRule.DO_TRADER_SPAWNING,false);
                         Bukkit.getWorld("world").setGameRule(GameRule.DO_PATROL_SPAWNING,false);
+                    }
+                }
+                if (command.getName().equals("무기선택")){
+                    if (args.length == 0){
+                        player.sendMessage(ChatColor.GRAY+ "===================="+ ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "===================="
+                                +"\r\n"+ChatColor.GRAY+"/무기선택 [대상] " +ChatColor.GRAY+"대상에게 무기 선택 창을 다시 띄워줍니다."
+                                +"\r\n"+ChatColor.GRAY+ "==================================================");
+                    }
+                    else {
+                        String selectPlayerName = args[1];
+                        Player selectPlayer = getServer().getPlayer(selectPlayerName);
+                        SelectWeapon(selectPlayer);
+                        player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ChatColor.GRAY + "정상적으로 해당 대상에게 무기 선택 창을 띄웠습니다.");
+                    }
+                }
+                if (command.getName().equals("기술선택")){
+                    if (args.length == 0){
+                        player.sendMessage(ChatColor.GRAY+ "===================="+ ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "===================="
+                                +"\r\n"+ChatColor.GRAY+"/기술선택 [대상] " +ChatColor.GRAY+"대상에게 기술 선택 창을 다시 띄워줍니다."
+                                +"\r\n"+ChatColor.GRAY+ "==================================================");
+                    }
+                    else {
+                        String selectPlayerName = args[1];
+                        Player selectPlayer = getServer().getPlayer(selectPlayerName);
+                        if (selectPlayer.getScoreboardTags().contains("magician")){
+                            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ChatColor.GRAY + "대상의 직업이 마법사가 아닙니다.");
+                        }
+                        else {
+                            SelectMagicianSkill(selectPlayer);
+                            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ChatColor.GRAY + "정상적으로 해당 대상에게 기술 선택 창을 띄웠습니다.");
+                        }
                     }
                 }
             }
@@ -390,7 +421,7 @@ public class Command implements TabExecutor {
             Player player = (Player) sender;
             if (player.isOp()){
                 if (args.length == 0){
-                    return Arrays.asList("게임시작","초기화");
+                    return Arrays.asList("게임시작","초기화","무기선택","기술선택");
                 }
             }
             if (args.length == 0){

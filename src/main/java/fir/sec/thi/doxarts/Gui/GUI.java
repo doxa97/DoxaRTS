@@ -119,6 +119,18 @@ public class GUI implements Listener {
             Select.setItem(6 ,MagicianWeaponSetting(12,"정화의 손길","들고 있으면 소유자가 교화될 정도로 맑은 기운을 가졌다.",4,14,0.75,2,0));
         }
 
+        player.openInventory(Select);
+    }
+
+    public static void SelectMagicianSkill(Player player) {
+        Inventory Select = Bukkit.createInventory(null, 9, "[ 기술 선택 ]");
+
+        Select.setItem(1,GuiTool(Material.BOOK,"마법 바람 기본 공격",Arrays.asList("마법사의 기본 공격 중 바람 마법이다.", "빠른 공격이 가능하다."),1));
+        Select.setItem(4,GuiTool(Material.BOOK,"마법 유도 화살 기본 공격",Arrays.asList("마법사의 기본 공격 중 유도 마법이다.", "자동으로 조준한 상대를 추격하기에 용이하다."),1));
+        Select.setItem(7,GuiTool(Material.BOOK,"마법 그림자 기본 공격",Arrays.asList("마법사의 기본 공격 중 그림자 마법이다.", "상대의 그림자에서 검은 가시가 나와 상대를 공격한다."),1));
+
+        player.openInventory(Select);
+
     }
 
     public static void Smith(Player player){

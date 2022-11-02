@@ -120,6 +120,25 @@ public class Interact implements Listener {
                     case 8 : Stats.StatUp(stat, player, 8);
                 }
             }
+            if (event.getView().getTitle().contains("[ 무기 선택 ]")) {
+                event.setCancelled(true);
+                ItemStack item = event.getCurrentItem();
+                if (item.getType() == Material.STICK){
+                    player.getInventory().addItem(item);
+                    player.closeInventory();
+                    if (player.getScoreboardTags().contains("magician")){
+                        SelectMagicianSkill(player);
+                    }
+                }
+            }
+            if (event.getView().getTitle().contains("[ 기술 선택 ]")) {
+                event.setCancelled(true);
+                ItemStack item = event.getCurrentItem();
+                if (item.getType() == Material.BOOK){
+                    player.getInventory().addItem(item);
+                    player.closeInventory();
+                }
+            }
             if (event.getView().getTitle().contains("[ 대장간 ]")) {
                 event.setCancelled(true);
                 switch (event.getRawSlot()) {
@@ -241,9 +260,14 @@ public class Interact implements Listener {
                         }
                     case 10 :
                         if (player.getScoreboardTags().contains("magician")){
-                            if (!player.getItemOnCursor().getItemMeta().getLore().contains("[ 기술 ]") || !player.getItemOnCursor().getItemMeta().getLore().contains("[ 제거 ]")) {
+                            if (!player.getItemOnCursor().getItemMeta().getDisplayName().contains("기본")) {
                                 event.setCancelled(true);
-                                player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] " + ChatColor.GRAY + "기술 등록 또는 제거 책 이외에는 올릴 수 없습니다.");
+                                player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] " + ChatColor.GRAY + "기본 기술 등록 책 이외에는 올릴 수 없습니다.");
+                                RunSound(player,"no",70,1);
+                            }
+                            if (!player.getItemOnCursor().getItemMeta().getLore().contains("[ 기술 ]")) {
+                                event.setCancelled(true);
+                                player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] " + ChatColor.GRAY + "기술 등록 책 이외에는 올릴 수 없습니다.");
                                 RunSound(player,"no",70,1);
                             }
                         }
@@ -256,7 +280,7 @@ public class Interact implements Listener {
                         if (!player.getItemOnCursor().getItemMeta().getLore().contains("[ 기술 ]") || !player.getItemOnCursor().getItemMeta().getLore().contains("[ 제거 ]")){
                             event.setCancelled(true);
                             RunSound(player,"no",70,1);
-                            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "기술 등록 또는 제거 책 이외에는 올릴 수 없습니다.");
+                            player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "기술 등록 책 또는 제거 수정 이외에는 올릴 수 없습니다.");
                         }
                     case 8 :
                         Smith(player);

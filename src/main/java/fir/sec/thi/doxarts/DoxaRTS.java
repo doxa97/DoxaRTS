@@ -57,6 +57,8 @@ public final class DoxaRTS extends JavaPlugin implements Listener {
         getCommand("직업").setExecutor(new Command());
         getCommand("스탯").setExecutor(new Command());
         getCommand("페린").setExecutor(new Command());
+        getCommand("무기선택").setExecutor(new Command());
+        getCommand("무기기술").setExecutor(new Command());
 
         getLogger().info("RTS ON!");
         getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
