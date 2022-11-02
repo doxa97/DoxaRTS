@@ -1,5 +1,7 @@
-package fir.sec.thi.doxarts;
+package fir.sec.thi.doxarts.Game;
 
+import fir.sec.thi.doxarts.Gui.GUI;
+import fir.sec.thi.doxarts.Stat.Stats;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -18,11 +20,11 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static fir.sec.thi.doxarts.BuyAndSell.*;
-import static fir.sec.thi.doxarts.GUI.*;
-import static fir.sec.thi.doxarts.SkillSet.SkillSetting;
-import static fir.sec.thi.doxarts.Teams.board;
-import static fir.sec.thi.doxarts.Upgrade.Upgrading;
+import static fir.sec.thi.doxarts.Shop.BuyAndSell.*;
+import static fir.sec.thi.doxarts.Gui.GUI.*;
+import static fir.sec.thi.doxarts.Shop.SkillSet.SkillSetting;
+import static fir.sec.thi.doxarts.Game.Teams.board;
+import static fir.sec.thi.doxarts.Shop.Upgrade.Upgrading;
 
 public class Interact implements Listener {
 
@@ -32,15 +34,18 @@ public class Interact implements Listener {
         Player player = event.getPlayer();
         Block block = event.getClickedBlock();
 
-        Integer xPos = event.getClickedBlock().getX();
-        Integer yPos = event.getClickedBlock().getY();
-        Integer zPos = event.getClickedBlock().getZ();
+        int xPos = event.getClickedBlock().getX();
+        int yPos = event.getClickedBlock().getY();
+        int zPos = event.getClickedBlock().getZ();
 
         if (player.getInventory().getItemInMainHand().getType() == Material.VILLAGER_SPAWN_EGG){
             if (player.getInventory().getItemInMainHand().getItemMeta().getDisplayName().contains("돌진")){
                 if (block.getType() == Material.EMERALD_BLOCK){
                     if (board.getEntryTeam(player.getName()).getName().equals("레드팀")){
-
+                        player.performCommand(" " + xPos + " " + yPos + " " + zPos + " ");
+                    }
+                    if (board.getEntryTeam(player.getName()).getName().equals("블루팀")){
+                        player.performCommand("");
                     }
                 }
                 else {
@@ -214,6 +219,7 @@ public class Interact implements Listener {
                                     player.getOpenInventory().getItem(6).setAmount(HaveKin - NeedKin);
                                 }
                                 Upgrading(player);
+                                player.getOpenInventory().getItem(5).setAmount(0);
                             }
                         }
                 }
@@ -222,6 +228,11 @@ public class Interact implements Listener {
                 switch (event.getRawSlot()){
                     case 0 :
                         SkillSetting(player);
+                        player.getOpenInventory().getItem(10).setAmount(0);
+                        player.getOpenInventory().getItem(12).setAmount(0);
+                        player.getOpenInventory().getItem(14).setAmount(0);
+                        player.getOpenInventory().getItem(16).setAmount(0);
+
                     case 4 :
                         if (!player.getItemOnCursor().getItemMeta().getLore().contains("[ 무기 ]")){
                             event.setCancelled(true);

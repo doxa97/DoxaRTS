@@ -1,4 +1,4 @@
-package fir.sec.thi.doxarts;
+package fir.sec.thi.doxarts.Skill;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;

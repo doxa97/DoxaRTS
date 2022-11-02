@@ -1,18 +1,22 @@
-package fir.sec.thi.doxarts;
+package fir.sec.thi.doxarts.Gui;
 
 import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Wolf;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
-import static fir.sec.thi.doxarts.Item.*;
-import static fir.sec.thi.doxarts.Stats.getStat;
+import static fir.sec.thi.doxarts.Gui.Item.*;
+import static fir.sec.thi.doxarts.Stat.Stats.getStat;
+import static org.bukkit.Bukkit.getServer;
 
 public class GUI implements Listener {
 
@@ -191,6 +195,11 @@ public class GUI implements Listener {
         shop.setItem(25,ShopAccessorySetting(1,"악순환의 굴레","붉게 물든 티아라는 악을 응축하여 담고있다."+"\r\n"+"언젠간 이 악몽을 끝낼 존재가 나올까.",0,15,0,0,0,1));
         shop.setItem(28,ShopAccessorySetting(1,"화신의 깃","세상의 가장 추운 지방에서 기리는 화신의 등판."+"\r\n"+"작은 깃 한 털 조차도 주변을 얼린다.",1,3,7,5,12,1));
 
+        shop.setItem(36,ShopItemSetting(Material.GLASS_BOTTLE,1,"하급 회복 물약","heal","체력을 10% 회복해주는 물약이다."+"\r\n"+"고급 약재로 사용되고 남은 약초 에리스의 잔여물을 달여 만든 물약.",150,70));
+        shop.setItem(37,ShopItemSetting(Material.GLASS_BOTTLE,1,"중급 회복 물약","heal","체력을 30% 회복해주는 물약이다."+"\r\n"+"약초 에리스의 뿌리를 잘게 거칠게 다져서 만든 물약.",400,190));
+        shop.setItem(38,ShopItemSetting(Material.GLASS_BOTTLE,1,"고급 회복 물약","heal","체력을 50% 회복해주는 물약이다."+"\r\n"+"약초 에리스의 잎을 곱게 갈아 성수에 오랜 시간 달여서 만든 물약.",750,350));
+        shop.setItem(39,ShopItemSetting(Material.GLASS_BOTTLE,1,"최고급 회복 물약","heal","체력을 70% 회복해주는 물약이다."+"\r\n"+"100년산 약초 에리스의 잎과 뿌리 전부를 곱게 갈아 오랜 시간 달이고 달여서 만든 물약..",1200,575));
+
         shop.setItem(46,ShopItemSetting(Material.DIAMOND,10000,ChatColor.DARK_GRAY+"에르 광물","material",ChatColor.GRAY+"일반적으로 채광하여 사용하는 기본적인 광물이다.",75,17));
         shop.setItem(47,ShopItemSetting(Material.EMERALD,10000,ChatColor.GREEN+"킨 광물","material",ChatColor.GRAY+"희귀하게 발견되어 비싸게 팔리는 광물이다.",180,40));
         shop.setItem(48,ShopItemSetting(Material.IRON_INGOT,10000,ChatColor.GREEN+"핏빛 늑대의 송곳니","material",ChatColor.GRAY+"핏빛 늑대의 날카로운 송곳니이다.",0,24));
@@ -273,6 +282,40 @@ public class GUI implements Listener {
 
         player.openInventory(shop);
 
+    }
+
+    public static void fillChest(String team, ItemStack... items){
+        try {
+
+            int xPos = 0;
+            int yPos = 0;
+            int zPos = 0;
+            World world = getServer().getWorld("world");
+            Chest chest = null;
+
+            if (team.equals("red")){
+                xPos = 15;
+                yPos = 15;
+                zPos = 15;
+            }
+            if (team.equals("blue")){
+                xPos = 30;
+                yPos = 30;
+                zPos = 30;
+            }
+
+            Location location = new Location(world,xPos,yPos,zPos);
+
+            if (location.getBlock().getType() == Material.CHEST){
+                chest = (Chest) world.getBlockAt(location);
+            }
+
+            Inventory inventory = chest.getBlockInventory();
+            inventory.addItem(items);
+
+        } catch (Exception e){
+            Bukkit.getConsoleSender().sendMessage("상자 채우기 실패");
+        }
     }
 
 }

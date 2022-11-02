@@ -1,4 +1,4 @@
-package fir.sec.thi.doxarts;
+package fir.sec.thi.doxarts.Game;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,7 +11,7 @@ import org.bukkit.scoreboard.Team;
 public class Teams implements Listener {
 
     static ScoreboardManager manager = Bukkit.getScoreboardManager();
-    static Scoreboard board = manager.getNewScoreboard();
+    public static Scoreboard board = manager.getNewScoreboard();
     static Team RedTeam = board.registerNewTeam("레드팀");
     static Team BlueTeam = board.registerNewTeam("블루팀");
 

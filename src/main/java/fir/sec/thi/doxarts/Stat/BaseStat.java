@@ -1,4 +1,4 @@
-package fir.sec.thi.doxarts;
+package fir.sec.thi.doxarts.Stat;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

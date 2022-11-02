@@ -1,5 +1,7 @@
-package fir.sec.thi.doxarts;
+package fir.sec.thi.doxarts.Stat;
 
+import fir.sec.thi.doxarts.Gui.GUI;
+import fir.sec.thi.doxarts.Stat.Stats;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -9,8 +11,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 
-import static fir.sec.thi.doxarts.GUI.RunSound;
-import static fir.sec.thi.doxarts.Stats.getStat;
+import static fir.sec.thi.doxarts.Gui.GUI.RunSound;
+import static fir.sec.thi.doxarts.Stat.Stats.getStat;
 import static fir.sec.thi.doxarts.Variable.accessory;
 import static fir.sec.thi.doxarts.Variable.weapon;
 

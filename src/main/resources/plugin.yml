@@ -11,3 +11,7 @@ commands:
     description: reset
   스탯:
     description: stat
+  직업:
+    description: job
+  페린:
+    description: money

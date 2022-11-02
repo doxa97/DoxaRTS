@@ -1,4 +1,4 @@
-package fir.sec.thi.doxarts;
+package fir.sec.thi.doxarts.Shop;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -6,13 +6,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
-import static fir.sec.thi.doxarts.GUI.RunSound;
-import static fir.sec.thi.doxarts.Money.AddPerin;
-import static fir.sec.thi.doxarts.Money.RemovePerin;
-import static fir.sec.thi.doxarts.Teams.board;
+import static fir.sec.thi.doxarts.Gui.GUI.RunSound;
+import static fir.sec.thi.doxarts.Shop.Money.AddPerin;
+import static fir.sec.thi.doxarts.Shop.Money.RemovePerin;
+import static fir.sec.thi.doxarts.Game.Teams.board;
 import static fir.sec.thi.doxarts.Variable.money;
 
 public class BuyAndSell implements Listener {

@@ -1,4 +1,4 @@
-package fir.sec.thi.doxarts;
+package fir.sec.thi.doxarts.Gui;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -134,6 +134,7 @@ public class Item implements Listener {
             case "skill" -> "기술";
             case "upgrade" -> "강화";
             case "mercenary" -> "용병";
+            case "heal" -> "회복";
             default -> null;
         };
         if (buy == 0){

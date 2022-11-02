@@ -1,4 +1,4 @@
-package fir.sec.thi.doxarts;
+package fir.sec.thi.doxarts.Stat;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static fir.sec.thi.doxarts.GUI.RunSound;
+import static fir.sec.thi.doxarts.Gui.GUI.RunSound;
 
 public class Stats implements Listener {
 
@@ -37,7 +37,7 @@ public class Stats implements Listener {
                     +"\r\n"+"총 지력:0"+"\r\n"+"총 손재주:0");
             w.flush();
             w.close();
-        } catch (IOException localIoException) {
+        } catch (IOException ignored) {
         }
     }
 
@@ -63,7 +63,7 @@ public class Stats implements Listener {
                 stat[count] = (Long) list.get(count);
             }
             return stat;
-        } catch (IOException localIoException) {
+        } catch (IOException ignored) {
         }
         return stat;
     }
@@ -89,7 +89,7 @@ public class Stats implements Listener {
                     +"\r\n"+"총 지력:"+stat[12]+"\r\n"+"총 손재주:"+stat[13]);
             W.flush();
             W.close();
-        } catch (IOException localIoException) {
+        } catch (IOException ignored) {
         }
     }
 

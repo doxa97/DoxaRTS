@@ -1,5 +1,6 @@
-package fir.sec.thi.doxarts;
+package fir.sec.thi.doxarts.Stat;
 
+import fir.sec.thi.doxarts.Stat.Stats;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

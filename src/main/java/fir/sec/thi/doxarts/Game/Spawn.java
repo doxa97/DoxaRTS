@@ -1,4 +1,4 @@
-package fir.sec.thi.doxarts;
+package fir.sec.thi.doxarts.Game;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -6,7 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
-import static fir.sec.thi.doxarts.Teams.board;
+import static fir.sec.thi.doxarts.Game.Teams.board;
 
 public class Spawn implements Listener {
 

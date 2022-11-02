@@ -1,4 +1,4 @@
-package fir.sec.thi.doxarts;
+package fir.sec.thi.doxarts.Stat;
 
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 
 import java.util.Objects;
 
-import static fir.sec.thi.doxarts.Stats.getStat;
+import static fir.sec.thi.doxarts.Stat.Stats.getStat;
 import static fir.sec.thi.doxarts.Variable.*;
 import static fir.sec.thi.doxarts.Variable.base;
 

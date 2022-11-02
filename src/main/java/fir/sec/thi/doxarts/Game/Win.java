@@ -1,10 +1,10 @@
-package fir.sec.thi.doxarts;
+package fir.sec.thi.doxarts.Game;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
-import static fir.sec.thi.doxarts.GUI.RunSound;
+import static fir.sec.thi.doxarts.Gui.GUI.RunSound;
 import static fir.sec.thi.doxarts.Variable.win;
 
 public class Win implements Listener {

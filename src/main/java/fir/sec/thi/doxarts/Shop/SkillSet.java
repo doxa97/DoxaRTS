@@ -1,4 +1,4 @@
-package fir.sec.thi.doxarts;
+package fir.sec.thi.doxarts.Shop;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
-import static fir.sec.thi.doxarts.GUI.RunSound;
+import static fir.sec.thi.doxarts.Gui.GUI.RunSound;
 
 public class SkillSet implements Listener {
 
