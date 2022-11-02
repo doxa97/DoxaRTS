@@ -11,12 +11,12 @@ public class Level implements Listener {
     public void getExp(PlayerExpChangeEvent e){
         Player player = e.getPlayer();
         long[] stat;
-        stat = Stats.getStat(player.getUniqueId().toString());
+        stat = Stats.getStat(player);
         int exp = e.getAmount();
         e.setAmount(0);
         stat[3] = stat[3] + exp;
         Stats.LevelUP(stat,player);
-        Stats.setStat(player.getUniqueId().toString(),stat);
+        Stats.setStat(player,stat);
     }
 
 }

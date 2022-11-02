@@ -11,9 +11,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static fir.sec.thi.doxarts.GUI.RunSound;
 import static fir.sec.thi.doxarts.GUI.SelectWeapon;
 import static fir.sec.thi.doxarts.Teams.*;
 import static fir.sec.thi.doxarts.Variable.money;
+import static fir.sec.thi.doxarts.Variable.win;
 
 public class Command implements TabExecutor {
 
@@ -24,47 +26,53 @@ public class Command implements TabExecutor {
             if (player.isOp()){
                 if (command.getName().equals("게임시작")){
                     for (Player online : Bukkit.getOnlinePlayers()){
-                        long[] stat = Stats.getStat(online.getUniqueId().toString());
+                        long[] stat = Stats.getStat(online);
                         stat[0] = 1; stat[1] = 0; stat[2] = 7; stat[3] = 0; stat[4] = 0;stat[5] = 0; stat[6] = 0;
                         stat[7] = 0; stat[8] = 0; stat[9] = 0;stat[10] = 0;stat[11] = 0; stat[12] = 0; stat[13] = 0;
-                        Stats.setStat(player.getUniqueId().toString(), stat);
+                        Stats.setStat(online, stat);
                         for (int i = 0; i <= online.getInventory().getSize(); i++){
                             ItemStack air = new ItemStack(Material.AIR);
                             online.getInventory().setItem(i, air);
                             online.updateInventory();
                         }
                         online.sendTitle("5","잠시 후, 게임이 시작됩니다.",10,20,20);
+                        RunSound(player,"ready",70,1);
                         try {
                             TimeUnit.SECONDS.sleep(1);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
                         online.sendTitle("4","잠시 후, 게임이 시작됩니다.",10,20,20);
+                        RunSound(player,"ready",70,1);
                         try {
                             TimeUnit.SECONDS.sleep(1);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
                         online.sendTitle("3","잠시 후, 게임이 시작됩니다.",10,20,20);
+                        RunSound(player,"ready",70,1);
                         try {
                             TimeUnit.SECONDS.sleep(1);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
                         online.sendTitle("2","잠시 후, 게임이 시작됩니다.",10,20,20);
+                        RunSound(player,"ready",70,1);
                         try {
                             TimeUnit.SECONDS.sleep(1);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
                         online.sendTitle("1","잠시 후, 게임이 시작됩니다.",10,20,20);
+                        RunSound(player,"ready",70,1);
                         try {
                             TimeUnit.SECONDS.sleep(1);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
                         online.sendTitle("0","게임이 시작됩니다.",10,20,20);
-                        if (online.getScoreboard().getTeams().equals("레드팀") || online.getScoreboard().getTeams().equals("블루팀")){
+                        RunSound(player,"start",70,1);
+                        if (board.getEntryTeam(online.getName()).getName().equals("레드팀") || board.getEntryTeam(online.getName()).getName().equals("블루팀")){
                             online.setHealth(0);
                         }
                         for (Entity entity : online.getWorld().getEntities()) {
@@ -77,7 +85,7 @@ public class Command implements TabExecutor {
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
-                        if (online.getScoreboard().getTeams().equals("블루팀") || online.getScoreboard().getTeams().equals("레드팀")){
+                        if (board.getEntryTeam(online.getName()).getName().equals("블루팀") || board.getEntryTeam(online.getName()).getName().equals("레드팀")){
                             SelectWeapon(online);
                             online.setGameMode(GameMode.ADVENTURE);
                         }
@@ -88,10 +96,10 @@ public class Command implements TabExecutor {
                 }
                 if (command.getName().equals("초기화")){
                     for (Player online : Bukkit.getOnlinePlayers()){
-                        long[] stat = Stats.getStat(online.getUniqueId().toString());
+                        long[] stat = Stats.getStat(online);
                         stat[0] = 1; stat[1] = 0; stat[2] = 7; stat[3] = 0; stat[4] = 0;stat[5] = 0; stat[6] = 0;
                         stat[7] = 0; stat[8] = 0; stat[9] = 0;stat[10] = 0;stat[11] = 0; stat[12] = 0; stat[13] = 0;
-                        Stats.setStat(player.getUniqueId().toString(),stat);
+                        Stats.setStat(online,stat);
                         for (int i = 0; i <= online.getInventory().getSize(); i++){
                             ItemStack air = new ItemStack(Material.AIR);
                             online.getInventory().setItem(i, air);
@@ -99,11 +107,18 @@ public class Command implements TabExecutor {
                         }
                         money.put("red",0);
                         money.put("blue",0);
-                        player.removeScoreboardTag("worrier");
-                        player.removeScoreboardTag("assassin");
-                        player.removeScoreboardTag("archer");
-                        player.removeScoreboardTag("magician");
-                        player.removeScoreboardTag("swordsman");
+                        win.remove("win");
+
+                        board.getEntryTeam(online.getName()).removeEntry(online.getName());
+
+                        online.setHealth(0);
+
+                        online.performCommand("clear @s");
+                        online.removeScoreboardTag("worrier");
+                        online.removeScoreboardTag("assassin");
+                        online.removeScoreboardTag("archer");
+                        online.removeScoreboardTag("magician");
+                        online.removeScoreboardTag("swordsman");
                         Bukkit.getWorld("world").setGameRule(GameRule.KEEP_INVENTORY,true);
                         Bukkit.getWorld("world").setGameRule(GameRule.DO_DAYLIGHT_CYCLE,false);
                         Bukkit.getWorld("world").setGameRule(GameRule.DO_TILE_DROPS,false);
@@ -220,12 +235,15 @@ public class Command implements TabExecutor {
                 }
             }
             if (args.length == 0){
-                return Arrays.asList("참가","스탯");
+                return Arrays.asList("참가","스탯","직업");
             }
             else {
                 if (args.length == 1){
                     if (command.getName().equals("참가")) {
                         return Arrays.asList("레드", "블루", "관전");
+                    }
+                    if (command.getName().equals("직업")) {
+                        return Arrays.asList("전사","검사","도적","궁수","마법사");
                     }
                 }
             }

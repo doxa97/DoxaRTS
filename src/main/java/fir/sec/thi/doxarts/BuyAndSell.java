@@ -9,8 +9,10 @@ import org.bukkit.inventory.meta.ItemMeta;
 import javax.swing.*;
 import java.util.ArrayList;
 
+import static fir.sec.thi.doxarts.GUI.RunSound;
 import static fir.sec.thi.doxarts.Money.AddPerin;
 import static fir.sec.thi.doxarts.Money.RemovePerin;
+import static fir.sec.thi.doxarts.Teams.board;
 import static fir.sec.thi.doxarts.Variable.money;
 
 public class BuyAndSell implements Listener {
@@ -29,21 +31,22 @@ public class BuyAndSell implements Listener {
                         .replace(" ","").replace(":","").replace("페린",""));
             }
         }
-        if (player.getScoreboard().getTeams().equals("레드팀")){
+        if (board.getEntryTeam(player.getName()).getName().equals("레드팀")){
             HaveMoney = money.get("red");
         }
-        if (player.getScoreboard().getTeams().equals("블루팀")){
+        if (board.getEntryTeam(player.getName()).getName().equals("블루팀")){
             HaveMoney = money.get("blue");
         }
 
         if (buy > HaveMoney){
             player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "돈이 부족하여 구매에 실패하였습니다.");
+            RunSound(player,"no",70,1);
         }
         else {
-            if (player.getScoreboard().getTeams().equals("레드팀")){
+            if (board.getEntryTeam(player.getName()).getName().equals("레드팀")){
                 RemovePerin("red",buy);
             }
-            if (player.getScoreboard().getTeams().equals("블루팀")){
+            if (board.getEntryTeam(player.getName()).getName().equals("블루팀")){
                 RemovePerin("blue",buy);
             }
             for (int i = 0; i <= lore.size(); i++){
@@ -60,6 +63,7 @@ public class BuyAndSell implements Listener {
             item.setItemMeta(meta);
             player.getInventory().addItem(item);
             player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "성공적으로 구매에 성공하셨습니다.");
+            RunSound(player,"shop",70,1);
         }
     }
 
@@ -77,21 +81,22 @@ public class BuyAndSell implements Listener {
                         .replace(" ","").replace(":","").replace("페린",""));
             }
         }
-        if (player.getScoreboard().getTeams().equals("레드팀")){
+        if (board.getEntryTeam(player.getName()).getName().equals("레드팀")){
             HaveMoney = money.get("red");
         }
-        if (player.getScoreboard().getTeams().equals("블루팀")){
+        if (board.getEntryTeam(player.getName()).getName().equals("블루팀")){
             HaveMoney = money.get("blue");
         }
 
         if (buy > HaveMoney){
             player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "돈이 부족하여 구매에 실패하였습니다.");
+            RunSound(player,"no",70,1);
         }
         else {
-            if (player.getScoreboard().getTeams().equals("레드팀")){
+            if (board.getEntryTeam(player.getName()).getName().equals("레드팀")){
                 RemovePerin("red",buy);
             }
-            if (player.getScoreboard().getTeams().equals("블루팀")){
+            if (board.getEntryTeam(player.getName()).getName().equals("블루팀")){
                 RemovePerin("blue",buy);
             }
             for (int i = 0; i <= lore.size(); i++){
@@ -110,6 +115,7 @@ public class BuyAndSell implements Listener {
                 player.getInventory().addItem(item);
             }
             player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "성공적으로 구매에 성공하셨습니다.");
+            RunSound(player,"shop",70,1);
         }
 
     }
@@ -134,16 +140,18 @@ public class BuyAndSell implements Listener {
             }
         }
         if (SellItem.getAmount() > 0) {
-            if (player.getScoreboard().getTeams().equals("레드팀")) {
+            if (board.getEntryTeam(player.getName()).getName().equals("레드팀")) {
                 AddPerin("red", sell);
             }
-            if (player.getScoreboard().getTeams().equals("블루팀")) {
+            if (board.getEntryTeam(player.getName()).getName().equals("블루팀")) {
                 AddPerin("blue", sell);
             }
             player.getInventory().remove(SellItem);
             player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] " + ChatColor.GRAY + "성공적으로 판매에 성공하셨습니다.");
+            RunSound(player,"chain",70,1);
         } else {
             player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] " + ChatColor.GRAY + "물품이 부족하여 판매에 실패했습니다.");
+            RunSound(player,"no",70,1);
         }
     }
 
@@ -167,18 +175,20 @@ public class BuyAndSell implements Listener {
             }
         }
         if (SellItem.getAmount() >= 64) {
-            if (player.getScoreboard().getTeams().equals("레드팀")) {
+            if (board.getEntryTeam(player.getName()).getName().equals("레드팀")) {
                 AddPerin("red", sell);
             }
-            if (player.getScoreboard().getTeams().equals("블루팀")) {
+            if (board.getEntryTeam(player.getName()).getName().equals("블루팀")) {
                 AddPerin("blue", sell);
             }
             for (int max = 64; max >= 0; max--){
                 player.getInventory().remove(SellItem);
             }
             player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] " + ChatColor.GRAY + "성공적으로 판매에 성공하셨습니다.");
+            RunSound(player,"shop",70,1);
         } else {
             player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] " + ChatColor.GRAY + "물품이 부족하여 판매에 실패했습니다.");
+            RunSound(player,"no",70,1);
         }
     }
 

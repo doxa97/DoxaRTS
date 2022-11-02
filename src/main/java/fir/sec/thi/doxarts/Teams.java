@@ -21,10 +21,10 @@ public class Teams implements Listener {
         RedTeam.setAllowFriendlyFire(false);
         RedTeam.setDisplayName(ChatColor.RED+"레드팀");
         RedTeam.setPrefix(ChatColor.RED + "[ 레드 ]");
-        if (player.getScoreboard().getTeams().equals("블루팀")){
-            BlueTeam.removePlayer(player);
+        if (board.getEntryTeam(player.getName()).getName().equals("블루팀")){
+            BlueTeam.removeEntry(player.getName());
         }
-        RedTeam.addPlayer(player);
+        RedTeam.addEntry(player.getName());
     }
 
     public static void BlueTeamJoin(Player player){
@@ -33,18 +33,18 @@ public class Teams implements Listener {
         BlueTeam.setAllowFriendlyFire(false);
         BlueTeam.setDisplayName(ChatColor.AQUA+"블루팀");
         BlueTeam.setPrefix(ChatColor.AQUA + "[ 블루 ]");
-        if (player.getScoreboard().getTeams().equals("레드팀")){
-            RedTeam.removePlayer(player);
+        if (board.getEntryTeam(player.getName()).getName().equals("레드팀")){
+            RedTeam.removeEntry(player.getName());
         }
-        BlueTeam.addPlayer(player);
+        BlueTeam.addEntry(player.getName());
     }
 
     public static void TeamLeave(Player player){
-        if (player.getScoreboard().getTeams().equals("레드팀")){
-            RedTeam.removePlayer(player);
+        if (board.getEntryTeam(player.getName()).getName().equals("레드팀")){
+            RedTeam.removeEntry(player.getName());
         }
-        if (player.getScoreboard().getTeams().equals("블루팀")){
-            BlueTeam.removePlayer(player);
+        if (board.getEntryTeam(player.getName()).getName().equals("블루팀")){
+            BlueTeam.removeEntry(player.getName());
         }
     }
 

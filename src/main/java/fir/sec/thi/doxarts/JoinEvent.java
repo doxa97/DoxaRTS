@@ -12,7 +12,7 @@ public class JoinEvent implements Listener {
     public void PlayerJoin(PlayerJoinEvent e){
         Player player = e.getPlayer();
         if (player.getLevel() == 0) {
-            Stats.CreateNewStat(player.getUniqueId().toString());
+            Stats.CreateNewStat(player);
             player.setLevel(1);
         }
         e.setJoinMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "어서 오십시오, "+ player.getName() +" 용사님.");

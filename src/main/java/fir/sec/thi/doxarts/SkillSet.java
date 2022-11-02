@@ -7,6 +7,8 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
+import static fir.sec.thi.doxarts.GUI.RunSound;
+
 public class SkillSet implements Listener {
 
     public static void SkillSetting(Player player){
@@ -47,6 +49,7 @@ public class SkillSet implements Listener {
                         player.sendMessage(ChatColor.AQUA+"[ DOXRTS ]" + ChatColor.GRAY + " 첫번째 슬롯에 기술을 정상 등록하였습니다.");
                     }
                     else {
+                        RunSound(player,"no",70,1);
                         player.sendMessage(ChatColor.AQUA+"[ DOXRTS ]" + ChatColor.GRAY + " 기술을 등록하기 위해서는 기술책이 필요합니다.");
                     }
                 }
@@ -56,13 +59,14 @@ public class SkillSet implements Listener {
                         Weapon.set(i+1,"[ 비어 있음 ]");
                         for (int num = 0; num < First.size(); num++){
                             if (First.get(num).contains("[ 두번째 슬롯 ]")){
-                                for (int delete = num-1; delete > i+1; delete--){
-                                    First.remove(delete);
+                                if (num > i + 2) {
+                                    First.subList(i + 2, num).clear();
                                 }
                             }
                         }
                     }
                     else {
+                        RunSound(player,"no",70,1);
                         player.sendMessage(ChatColor.AQUA+"[ DOXRTS ]" + ChatColor.GRAY + " 기술을 제거하기 위해서는 제거 수정이 필요합니다.");
                     }
                 }
@@ -74,6 +78,7 @@ public class SkillSet implements Listener {
                         player.sendMessage(ChatColor.AQUA+"[ DOXRTS ]" + ChatColor.GRAY + " 두번째 슬롯에 기술을 정상 등록하였습니다.");
                     }
                     else {
+                        RunSound(player,"no",70,1);
                         player.sendMessage(ChatColor.AQUA+"[ DOXRTS ]" + ChatColor.GRAY + " 기술을 등록하기 위해서는 기술책이 필요합니다.");
                     }
                 }
@@ -83,13 +88,14 @@ public class SkillSet implements Listener {
                         Weapon.set(i+1,"[ 비어 있음 ]");
                         for (int num = 0; num < Second.size(); num++){
                             if (Second.get(num).contains("[ 세번째 슬롯 ]")){
-                                for (int delete = num-1; delete > i+1; delete--){
-                                    Second.remove(delete);
+                                if (num > i + 2) {
+                                    Second.subList(i + 2, num).clear();
                                 }
                             }
                         }
                     }
                     else {
+                        RunSound(player,"no",70,1);
                         player.sendMessage(ChatColor.AQUA+"[ DOXRTS ]" + ChatColor.GRAY + " 기술을 제거하기 위해서는 제거 수정이 필요합니다.");
                     }
                 }
@@ -101,6 +107,7 @@ public class SkillSet implements Listener {
                         player.sendMessage(ChatColor.AQUA+"[ DOXRTS ]" + ChatColor.GRAY + " 세번째 슬롯에 기술을 정상 등록하였습니다.");
                     }
                     else {
+                        RunSound(player,"no",70,1);
                         player.sendMessage(ChatColor.AQUA+"[ DOXRTS ]" + ChatColor.GRAY + " 기술을 등록하기 위해서는 기술책이 필요합니다.");
                     }
                 }
@@ -110,13 +117,14 @@ public class SkillSet implements Listener {
                         Weapon.set(i+1,"[ 비어 있음 ]");
                         for (int num = 0; num < Third.size(); num++){
                             if (Third.get(num).contains("[ 네번째 슬롯 ]")){
-                                for (int delete = num-1; delete > i+1; delete--){
-                                    Third.remove(delete);
+                                if (num > i + 2) {
+                                    Third.subList(i + 2, num).clear();
                                 }
                             }
                         }
                     }
                     else {
+                        RunSound(player,"no",70,1);
                         player.sendMessage(ChatColor.AQUA+"[ DOXRTS ]" + ChatColor.GRAY + " 기술을 제거하기 위해서는 제거 수정이 필요합니다.");
                     }
                 }
@@ -128,6 +136,7 @@ public class SkillSet implements Listener {
                         player.sendMessage(ChatColor.AQUA+"[ DOXRTS ]" + ChatColor.GRAY + " 네번째 슬롯에 기술을 정상 등록하였습니다.");
                     }
                     else {
+                        RunSound(player,"no",70,1);
                         player.sendMessage(ChatColor.AQUA+"[ DOXRTS ]" + ChatColor.GRAY + " 기술을 등록하기 위해서는 기술책이 필요합니다.");
                     }
                 }
@@ -140,6 +149,7 @@ public class SkillSet implements Listener {
                         }
                     }
                     else {
+                        RunSound(player,"no",70,1);
                         player.sendMessage(ChatColor.AQUA+"[ DOXRTS ]" + ChatColor.GRAY + " 기술을 제거하기 위해서는 제거 수정이 필요합니다.");
                     }
                 }

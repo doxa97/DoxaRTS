@@ -1,8 +1,6 @@
 package fir.sec.thi.doxarts;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
@@ -14,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static fir.sec.thi.doxarts.Item.*;
+import static fir.sec.thi.doxarts.Stats.getStat;
 
 public class GUI implements Listener {
 
@@ -28,14 +27,61 @@ public class GUI implements Listener {
         return stack;
     }
 
+    public static void RunSound(Player player, String sound, int volume, int pitch) {
+
+        Location loc = player.getLocation();
+
+        Sound SoundType = switch (sound) {
+            case "levelup" -> Sound.ENTITY_PLAYER_LEVELUP;
+            case "upgrade" -> Sound.ENTITY_VILLAGER_WORK_TOOLSMITH;
+            case "skill" -> Sound.BLOCK_BEACON_POWER_SELECT;
+            case "gui" -> Sound.UI_STONECUTTER_SELECT_RECIPE;
+            case "start" -> Sound.ENTITY_ENDER_DRAGON_GROWL;
+            case "no" -> Sound.ENTITY_VILLAGER_NO;
+            case "ready" -> Sound.BLOCK_NOTE_BLOCK_BELL;
+            case "shop" -> Sound.BLOCK_CHAIN_BREAK;
+            case "mercenary" -> Sound.ENTITY_PILLAGER_CELEBRATE;
+            case "close" -> Sound.BLOCK_WOODEN_DOOR_CLOSE;
+            default -> null;
+        };
+
+        player.playSound(loc,SoundType,volume,pitch);
+
+        /*
+        레벨업 = ENTITY_PLAYER_LEVELUP
+        강화 = ENTITY_VILLAGER_WORK_TOOLSMITH
+        스킬 장착 = BLOCK_BEACON_POWER_SELECT
+        GUI 클릭 = UI_STONECUTTER_SELECT_RECIPE
+        게임 시작 = ENTITY_ENDER_DRAGON_GROWL
+        금지 = ENTITY_VILLAGER_NO
+        준비 = BLOCK_NOTE_BLOCK_BELL
+        상점 = BLOCK_CHAIN_BREAK
+        용병 = ENTITY_PILLAGER_CELEBRATE
+
+         */
+
+    }
+
+    /*
+
+    활력 1 = 초당 체력 재생 3 체력 증가 25
+    근력 1 = 물리 공격력 6 체력 10
+    민첩 1 = 이동 속도 0.05 치명타 확률 3 공격 속도 0.05
+    지력 1 = 마법 공격력 10
+    손재주 1 = 물리 공격력 3 마법 공격력 3 치명타 확률 1
+
+     */
+
     public static void Status(Player player){
         Inventory status = Bukkit.createInventory(null, 9,"[ S T A T U S ]");
 
-        status.setItem(0, GuiTool(Material.COOKED_BEEF, ChatColor.RED+ "[ 활력 ]", Arrays.asList(ChatColor.GRAY+"dsa","asd"), 10000));
-        status.setItem(2, GuiTool(Material.IRON_SWORD, ChatColor.DARK_RED + "[ 근력 ]", Arrays.asList(ChatColor.GRAY+"dsa","asd"), 10000));
-        status.setItem(4, GuiTool(Material.LEATHER_BOOTS,  ChatColor.AQUA+ "[ 민첩 ]", Arrays.asList(ChatColor.GRAY+"dsa","asd"), 10000));
-        status.setItem(6, GuiTool(Material.KNOWLEDGE_BOOK, ChatColor.DARK_PURPLE + "[ 지력 ]", Arrays.asList(ChatColor.GRAY+"dsa","asd"), 10000));
-        status.setItem(8, GuiTool(Material.BOW,  ChatColor.GOLD+ "[ 손재주 ]", Arrays.asList(ChatColor.GRAY+"dsa","asd"), 10000));
+        long[] stat = getStat(player);
+
+        status.setItem(0, GuiTool(Material.COOKED_BEEF, ChatColor.RED+ "[ 활력 ]", Arrays.asList(ChatColor.GRAY+"초당 체력 재생이 3 증가하며, 체력이 25 증가합니다.","총 활력 : "+stat[9]), 10000));
+        status.setItem(2, GuiTool(Material.IRON_SWORD, ChatColor.DARK_RED + "[ 근력 ]", Arrays.asList(ChatColor.GRAY+"물리 공격력이 6 증가하며, 체력이 10 증가합니다.","총 근력 : "+stat[10]), 10000));
+        status.setItem(4, GuiTool(Material.LEATHER_BOOTS,  ChatColor.AQUA+ "[ 민첩 ]", Arrays.asList(ChatColor.GRAY+"이동 및 공격 속도가 0.05 증가하고, 치명타 확률이 3 증가합니다.","총 민첩 : "+stat[11]), 10000));
+        status.setItem(6, GuiTool(Material.KNOWLEDGE_BOOK, ChatColor.DARK_PURPLE + "[ 지력 ]", Arrays.asList(ChatColor.GRAY+"마법 공격력이 10 증가합니다.","총 지력 : "+stat[12]), 10000));
+        status.setItem(8, GuiTool(Material.BOW,  ChatColor.GOLD+ "[ 손재주 ]", Arrays.asList(ChatColor.GRAY+"물리 및 마법 공격력이 3, 치명타 확률이 1 증가합니다.","총 손재주 : "+stat[13]), 10000));
 
         player.openInventory(status);
 
@@ -87,7 +133,7 @@ public class GUI implements Listener {
         upgrade.setItem(0,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"→",Arrays.asList("이 옆에 장비를 놓아주세요."),10000));
         upgrade.setItem(2,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←",Arrays.asList("이 옆에 장비를 놓아주세요."),10000));
 
-        upgrade.setItem(3,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"→",Arrays.asList("이 옆에 재료를 놓아주세요."),10000));
+        upgrade.setItem(3,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"→",Arrays.asList("이 옆에 강화서를 놓아주세요."),10000));
         upgrade.setItem(6,GuiTool(Material.GRAY_STAINED_GLASS_PANE,ChatColor.GRAY+"←",Arrays.asList("이 옆에 재료를 놓아주세요."),10000));
 
         upgrade.setItem(7,GuiTool(Material.GREEN_STAINED_GLASS_PANE,ChatColor.GREEN+"[ 강화 ]",Arrays.asList(ChatColor.GRAY+"누르면 장비 강화를 시도합니다.","필요 킨 광물 : 0","필요 에르 광물 : 0"),10000));
@@ -155,14 +201,44 @@ public class GUI implements Listener {
         shop.setItem(55,ShopItemSetting(Material.IRON_INGOT,10000,ChatColor.GREEN+"거미의 질긴 실","material",ChatColor.GRAY+"거미의 분비액이 굳어 거미줄이 되었다.",0,13));
         shop.setItem(56,ShopItemSetting(Material.IRON_INGOT,10000,ChatColor.GREEN+"응축된 힘의 결정체","material",ChatColor.GRAY+"감히 가늠이 되지 않는 마력이 담긴 정수다.",0,150));
 
-        shop.setItem(4, GuiTool(Material.BOOK, ChatColor.LIGHT_PURPLE+"[ 기술 관련 구매 ]", Arrays.asList(ChatColor.GRAY+"기술 관련 물건을 구매 가능합니다.",ChatColor.GRAY+"누르면 기술 관련 상점으로 이동합니다."),1));
+        shop.setItem(2, GuiTool(Material.BOOK, ChatColor.LIGHT_PURPLE+"[ 기술 관련 구매 ]", Arrays.asList(ChatColor.GRAY+"기술 관련 물건을 구매 가능합니다.",ChatColor.GRAY+"누르면 기술 관련 상점으로 이동합니다."),1));
+        shop.setItem(4, GuiTool(Material.BOOK, ChatColor.LIGHT_PURPLE+"[ 용병 고용서 구매 ]", Arrays.asList(ChatColor.GRAY+"용병 고용서를 구매 가능합니다.",ChatColor.GRAY+"누르면 용병 고용서 구매로 이동합니다."),1));
+        shop.setItem(6, GuiTool(Material.BOOK, ChatColor.LIGHT_PURPLE+"[ 무기 강화서 구매 ]", Arrays.asList(ChatColor.GRAY+"무기 강화서를 구매 가능합니다.",ChatColor.GRAY+"누르면 무기 강화서 상점으로 이동합니다."),1));
 
         player.openInventory(shop);
 
     }
 
+    public static void UpgradeShop(Player player){
+        Inventory shop = Bukkit.createInventory(null, 18, "[ 무기 강화서 상점 ]");
+
+        shop.setItem(9,ShopItemSetting(Material.BOOK,1,"물리 공격력 강화서","upgrade","물리 공격력을 13 만큼 증폭해줍니다.",1300,0));
+        shop.setItem(11,ShopItemSetting(Material.BOOK,1,"마법 공격력 강화서","upgrade","마법 공격력을 15 만큼 증폭해줍니다.",1300,0));
+        shop.setItem(13,ShopItemSetting(Material.BOOK,1,"공격 속도 강화서","upgrade","공격 속도를 0.15 만큼 증폭해줍니다.",1700,0));
+        shop.setItem(15,ShopItemSetting(Material.BOOK,1,"치명타 확률 강화서","upgrade","치명타 확률을 8 만큼 증폭해줍니다.",2000,0));
+        shop.setItem(17,ShopItemSetting(Material.BOOK,1,"흡혈 강화서","upgrade","흡혈을 3 만큼 증폭해줍니다.",2300,0));
+
+        shop.setItem(4, GuiTool(Material.BOOK, ChatColor.LIGHT_PURPLE+"[ 재료 및 무기 구매 ]", Arrays.asList(ChatColor.GRAY+"재료 및 무기를 구매 가능합니다.",ChatColor.GRAY+"누르면 재료와 무기 관련 상점으로 이동합니다."),1));
+
+        player.openInventory(shop);
+    }
+
+    public static void MercenaryShop(Player player){
+        Inventory shop = Bukkit.createInventory(null, 18, "[ 용병 고용서 상점 ]");
+
+        shop.setItem(0,ShopItemSetting(Material.VILLAGER_SPAWN_EGG,1,"광부 고용서","mercenary","자리에 서서 광물을 채굴하는 광부를 소환합니다.",350,0));
+        shop.setItem(2,ShopItemSetting(Material.VILLAGER_SPAWN_EGG,1,"근접 용병 고용서","mercenary","자리에 서서 근접하는 적을 공격하는 용병을 소환합니다.",700,0));
+        shop.setItem(4,ShopItemSetting(Material.VILLAGER_SPAWN_EGG,1,"원거리 용병 고용서","mercenary","자리에 서서 근접하는 적을 공격하는 용병을 소환합니다.",900,0));
+        shop.setItem(6,ShopItemSetting(Material.VILLAGER_SPAWN_EGG,1,"근접 돌진 용병 고용서","mercenary","길을 따라 이동하며 근접하는 적을 공격하는 용병을 소환합니다.",700,0));
+        shop.setItem(8,ShopItemSetting(Material.VILLAGER_SPAWN_EGG,1,"원거리 돌진 용병 고용서","mercenary","길을 따라 이동하며 근접하는 적을 공격하는 용병을 소환합니다.",900,0));
+
+        shop.setItem(4, GuiTool(Material.BOOK, ChatColor.LIGHT_PURPLE+"[ 재료 및 무기 구매 ]", Arrays.asList(ChatColor.GRAY+"재료 및 무기를 구매 가능합니다.",ChatColor.GRAY+"누르면 재료와 무기 관련 상점으로 이동합니다."),1));
+
+        player.openInventory(shop);
+    }
+
     public static void SkillShop(Player player){
-        Inventory shop = Bukkit.createInventory(null, 54,"[ 상점 ]");
+        Inventory shop = Bukkit.createInventory(null, 54,"[ 기술 상점 ]");
 
         shop.setItem(10, ShopItemSetting(Material.BOOK,1,ChatColor.GRAY+"올려 베기","skill","물리 계열"+"\r\n"+"돌진 후 대상을 올려 베어 피해를 입히는 기술이다.",700,300));
         shop.setItem(11, ShopItemSetting(Material.BOOK,1,ChatColor.GRAY+"십자 베기","skill","물리 계열"+"\r\n"+"십자로 전방을 베어 피해를 입히는 기술이다.",700,300));

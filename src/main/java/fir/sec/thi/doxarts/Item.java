@@ -19,6 +19,7 @@ public class Item implements Listener {
         meta.setCustomModelData(CustomModel);
         meta.setLore(Arrays.asList(
                 "[ 무기 ]",
+                "강화 수치 : 0",
                 lore,
                 "물리 공격력 : " +meleeattack,
                 "마법 공격력 : " +magicattack,
@@ -47,6 +48,7 @@ public class Item implements Listener {
         meta.setCustomModelData(CustomModel);
         meta.setLore(Arrays.asList(
                 "[ 무기 ]",
+                "강화 수치 : 0",
                 lore,
                 "물리 공격력 : " +meleeattack,
                 "마법 공격력 : " +magicattack,
@@ -75,6 +77,7 @@ public class Item implements Listener {
         meta.setLore(Arrays.asList(
                 "========[ 상점 ]========",
                 "[ 무기 ]",
+                "강화 수치 : 0",
                 lore,
                 "물리 공격력 : " +meleeattack,
                 "마법 공격력 : " +magicattack,
@@ -125,13 +128,14 @@ public class Item implements Listener {
         meta.setDisplayName(display);
         meta.setUnbreakable(true);
         meta.setCustomModelData(CustomModel);
-        String Type = null;
-        switch (type){
-            case "material" : Type = "재료";
-            case "delete" : Type = "제거";
-            case "skill" : Type = "기술";
-
-        }
+        String Type = switch (type) {
+            case "material" -> "재료";
+            case "delete" -> "제거";
+            case "skill" -> "기술";
+            case "upgrade" -> "강화";
+            case "mercenary" -> "용병";
+            default -> null;
+        };
         if (buy == 0){
             meta.setLore(Arrays.asList(
                     "========[ 상점 ]========",

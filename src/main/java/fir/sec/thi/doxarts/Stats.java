@@ -7,10 +7,22 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static fir.sec.thi.doxarts.GUI.RunSound;
+
 public class Stats implements Listener {
 
-    public static void CreateNewStat(String player) {
-        File filename = new File("plugins/RTS/Stat/" + player + ".yml");
+    /*
+
+    활력 1 = 초당 체력 재생 3 체력 증가 25
+    근력 1 = 물리 공격력 6 체력 10
+    민첩 1 = 이동 속도 0.05 치명타 확률 3 공격 속도 0.05
+    지력 1 = 마법 공격력 10
+    손재주 1 = 물리 공격력 3 마법 공격력 3 치명타 확률 1
+
+     */
+
+    public static void CreateNewStat(Player player) {
+        File filename = new File("plugins/RTS/Stat/" + player.getName() + ".yml");
         File folder_Location1 = new File("plugins/RTS/");
         File folder_Location2 = new File("plugins/RTS/Stat");
         try {
@@ -29,8 +41,8 @@ public class Stats implements Listener {
         }
     }
 
-    public static long[] getStat(String player) {
-        File filename = new File("plugins/RTS/Stat/" + player + ".yml");
+    public static long[] getStat(Player player) {
+        File filename = new File("plugins/RTS/Stat/" + player.getName() + ".yml");
         File folder_Location1 = new File("plugins/RTS/");
         File folder_Location2 = new File("plugins/RTS/Stat");
         long[] stat = new long[14];
@@ -61,8 +73,8 @@ public class Stats implements Listener {
         return Long.parseLong(cut[1]);
     }
 
-    public static void setStat(String player, long[] stat) {
-        File filename = new File("plugins/RTS/Stat/" + player + ".yml");
+    public static void setStat(Player player, long[] stat) {
+        File filename = new File("plugins/RTS/Stat/" + player.getName() + ".yml");
         File folder_Location1 = new File("plugins/RTS/");
         File folder_Location2 = new File("plugins/RTS/Stat");
         try {
@@ -85,9 +97,11 @@ public class Stats implements Listener {
         if (stat[1] > 0) {
             stat[num] = stat[num] + 1;
             stat[1] = stat[1] - 1;
-            setStat(player.getUniqueId().toString(), stat);
+            setStat(player, stat);
+            RunSound(player,"gui",70,1);
         } else {
             player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "잔여 스탯이 부족합니다.");
+            RunSound(player,"no",70,1);
         }
     }
 
@@ -101,7 +115,8 @@ public class Stats implements Listener {
                 stat[2] = (stat[0] * 2) + stat[3];
                 stat[1] = stat[1] + 3;
                 player.sendMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "Level Up! 더욱 강해지는 것이 느껴집니다..!");
-                setStat(player.getUniqueId().toString(), stat);
+                RunSound(player,"levelup",70,1);
+                setStat(player, stat);
             }
         }
     }
