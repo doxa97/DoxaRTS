@@ -28,6 +28,7 @@ import java.util.Random;
 import static fir.sec.thi.doxarts.Gui.GUI.fillChest;
 import static fir.sec.thi.doxarts.Shop.Money.AddPerin;
 import static fir.sec.thi.doxarts.Game.Teams.board;
+import static fir.sec.thi.doxarts.Stat.Stats.getStat;
 import static fir.sec.thi.doxarts.Variable.*;
 
 public class AttackEvent implements Listener {
@@ -290,7 +291,8 @@ public class AttackEvent implements Listener {
     if (event.getEntity().getLastDamageCause() instanceof LivingEntity) {
         killer = (LivingEntity) event.getEntity().getLastDamageCause().getEntity();
     }
-    LivingEntity death = event.getEntity();
+    Player death = event.getEntity();
+    event.setDroppedExp(death.getLevel() * 5);
     if (board.getEntryTeam(death.getName()).getName().contains("레드팀")){
         if (killer == null){
             event.setDeathMessage(ChatColor.AQUA + "[ DOXRTS ]"+ ChatColor.GRAY + "레드팀의 " +death.getName() + "유저가 사망하여, 블루팀에게 300 페린이 지급됩니다! - 공헌자 : 없음");

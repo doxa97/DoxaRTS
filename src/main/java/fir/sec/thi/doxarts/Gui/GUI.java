@@ -81,11 +81,11 @@ public class GUI implements Listener {
 
         long[] stat = getStat(player);
 
-        status.setItem(0, GuiTool(Material.COOKED_BEEF, ChatColor.RED+ "[ 활력 ]", Arrays.asList(ChatColor.GRAY+"초당 체력 재생이 3 증가하며, 체력이 25 증가합니다.","총 활력 : "+stat[9]), 10000));
-        status.setItem(2, GuiTool(Material.IRON_SWORD, ChatColor.DARK_RED + "[ 근력 ]", Arrays.asList(ChatColor.GRAY+"물리 공격력이 6 증가하며, 체력이 10 증가합니다.","총 근력 : "+stat[10]), 10000));
-        status.setItem(4, GuiTool(Material.LEATHER_BOOTS,  ChatColor.AQUA+ "[ 민첩 ]", Arrays.asList(ChatColor.GRAY+"이동 및 공격 속도가 0.05 증가하고, 치명타 확률이 3 증가합니다.","총 민첩 : "+stat[11]), 10000));
-        status.setItem(6, GuiTool(Material.KNOWLEDGE_BOOK, ChatColor.DARK_PURPLE + "[ 지력 ]", Arrays.asList(ChatColor.GRAY+"마법 공격력이 10 증가합니다.","총 지력 : "+stat[12]), 10000));
-        status.setItem(8, GuiTool(Material.BOW,  ChatColor.GOLD+ "[ 손재주 ]", Arrays.asList(ChatColor.GRAY+"물리 및 마법 공격력이 3, 치명타 확률이 1 증가합니다.","총 손재주 : "+stat[13]), 10000));
+        status.setItem(0, GuiTool(Material.COOKED_BEEF, ChatColor.RED+ "[ 활력 ]", Arrays.asList(ChatColor.GRAY+"초당 체력 재생이 3 증가하며, 체력이 25 증가합니다.","총 활력 : "+stat[9],"현재 보유 포인트 : " + stat[1]), 10000));
+        status.setItem(2, GuiTool(Material.IRON_SWORD, ChatColor.DARK_RED + "[ 근력 ]", Arrays.asList(ChatColor.GRAY+"물리 공격력이 6 증가하며, 체력이 10 증가합니다.","총 근력 : "+stat[10],"현재 보유 포인트 : " + stat[1]), 10000));
+        status.setItem(4, GuiTool(Material.LEATHER_BOOTS,  ChatColor.AQUA+ "[ 민첩 ]", Arrays.asList(ChatColor.GRAY+"이동 및 공격 속도가 0.05 증가하고, 치명타 확률이 3 증가합니다.","총 민첩 : "+stat[11],"현재 보유 포인트 : " + stat[1]), 10000));
+        status.setItem(6, GuiTool(Material.KNOWLEDGE_BOOK, ChatColor.DARK_PURPLE + "[ 지력 ]", Arrays.asList(ChatColor.GRAY+"마법 공격력이 10 증가합니다.","총 지력 : "+stat[12],"현재 보유 포인트 : " + stat[1]), 10000));
+        status.setItem(8, GuiTool(Material.BOW,  ChatColor.GOLD+ "[ 손재주 ]", Arrays.asList(ChatColor.GRAY+"물리 및 마법 공격력이 3, 치명타 확률이 1 증가합니다.","총 손재주 : "+stat[13],"현재 보유 포인트 : " + stat[1]), 10000));
 
         player.openInventory(status);
 
