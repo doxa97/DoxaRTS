@@ -50,16 +50,18 @@ public class Interact implements Listener {
                 }
                 else {
                     RunSound(player,"no",70,1);
+                    event.setCancelled(true);
                     player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "돌진 용병은 에메랄드 블럭 위에한 소환 가능합니다.");
                 }
             }
 
             else {
                 RunSound(player,"no",70,1);
+                event.setCancelled(true);
                 player.sendMessage(ChatColor.AQUA + "[ DOXRTS ] "+ ChatColor.GRAY + "특정 블럭에만 상호작용이 가능합니다.");
             }
         }
-        event.setCancelled(true);
+
     }
 
     @EventHandler
@@ -432,7 +434,6 @@ public class Interact implements Listener {
     public void InventoryClose(InventoryCloseEvent event){
 
         Player player = (Player) event.getPlayer();
-        RunSound(player,"close",70,1);
 
         if (player.getOpenInventory().getTitle().contains("[ 장비 강화 ]")){
             ItemStack first = player.getOpenInventory().getTopInventory().getItem(1);

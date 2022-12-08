@@ -6,15 +6,18 @@ import org.bukkit.event.Listener;
 
 import static fir.sec.thi.doxarts.Game.Teams.board;
 import static fir.sec.thi.doxarts.Variable.money;
+import static org.bukkit.Bukkit.getServer;
 
 public class Money implements Listener {
 
-    public static void  PerinActionBar(Player player){
-        if (board.getEntryTeam(player.getName()).getName().contains("레드팀")){
-            player.sendMessage(ChatMessageType.ACTION_BAR+"페린 소지량 : " + money.get("red"));
-        }
-        if (board.getEntryTeam(player.getName()).getName().contains("블루팀")){
-            player.sendMessage(ChatMessageType.ACTION_BAR+"페린 소지량 : " + money.get("blue"));
+    public static void  PerinActionBar(){
+        for (Player player : getServer().getOnlinePlayers()) {
+            if (board.getEntryTeam(player.getName()).getName().contains("레드팀")) {
+                player.sendMessage(ChatMessageType.ACTION_BAR + "페린 소지량 : " + money.get("red"));
+            }
+            if (board.getEntryTeam(player.getName()).getName().contains("블루팀")) {
+                player.sendMessage(ChatMessageType.ACTION_BAR + "페린 소지량 : " + money.get("blue"));
+            }
         }
     }
     public static void AddPerin(String team, int add){

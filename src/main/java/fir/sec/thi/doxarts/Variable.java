@@ -5,6 +5,8 @@ import org.bukkit.event.Listener;
 
 import java.util.HashMap;
 
+import static org.bukkit.Bukkit.getServer;
+
 public class Variable implements Listener {
 
     public static HashMap<String,Double> PlayerTotalStat = new HashMap<>();
@@ -16,10 +18,12 @@ public class Variable implements Listener {
     public static HashMap<String,String> win = new HashMap<>();
     public static HashMap<String,Integer> cooldown = new HashMap<>();
 
-    public static void Cooldown(Player player){
-        String name = player.getName();
-        if (!(cooldown.get(name+"Potion") <= 0)){
-            cooldown.put(name+"Potion", cooldown.get(name+"Potion") - 1);
+    public static void Cooldown(){
+        for (Player player : getServer().getOnlinePlayers()) {
+            String name = player.getName();
+            if (!(cooldown.get(name + "Potion") <= 0)) {
+                cooldown.put(name + "Potion", cooldown.get(name + "Potion") - 1);
+            }
         }
     }
 

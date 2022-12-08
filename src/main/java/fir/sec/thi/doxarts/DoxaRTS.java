@@ -9,6 +9,7 @@ import fir.sec.thi.doxarts.Shop.SkillSet;
 import fir.sec.thi.doxarts.Shop.Upgrade;
 import fir.sec.thi.doxarts.Skill.Skill;
 import fir.sec.thi.doxarts.Stat.*;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -58,37 +59,43 @@ public final class DoxaRTS extends JavaPlugin implements Listener {
         getCommand("스탯").setExecutor(new Command());
         getCommand("페린").setExecutor(new Command());
         getCommand("무기선택").setExecutor(new Command());
-        getCommand("무기기술").setExecutor(new Command());
+        getCommand("기술선택").setExecutor(new Command());
 
         getLogger().info("RTS ON!");
-        getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
-
-            for (Player player : getServer().getOnlinePlayers()) {
-
-                DamageSet(player);
-                BaseStatSetting(player);
-                AccessoryAndEquipment(player);
-                StatSetting(player);
-                PerinActionBar(player);
-
-                if (win.get("win").equals("blue")){
-                    BlueWin(player);
-                }
-                if (win.get("win").equals("red")){
-                    RedWin(player);
-                }
-
+        getServer().getScheduler().scheduleAsyncRepeatingTask(this, () -> {
+            for (Player player : getServer().getOnlinePlayers()){
+                player.sendMessage("0");
             }
-        },0,0);
+
+            DamageSet();
+            BaseStatSetting();
+            AccessoryAndEquipment();
+            StatSetting();
+            PerinActionBar();
+
+            if (!win.isEmpty()) {
+                if (win.get("win").equals("blue")) {
+                    BlueWin();
+                }
+                if (win.get("win").equals("red")) {
+                    RedWin();
+                }
+            }
+        },0,1);
         getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
             for (Player player : getServer().getOnlinePlayers()){
-                Cooldown(player);
+                player.sendMessage("20");
             }
-        },20,0);
+            if (!cooldown.isEmpty()){
+                Cooldown();
+            }
+        },20,1);
         getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
             for (Player player : getServer().getOnlinePlayers()){
                 String name = player.getName();
-                player.setHealth(player.getHealth() + PlayerTotalStat.get(name+"Regeneration"));
+                if (!PlayerTotalStat.isEmpty()){
+                    player.setHealth(player.getHealth() + PlayerTotalStat.get(name+"Regeneration"));
+                }
             }
         },60,0);
     }
